@@ -762,7 +762,9 @@ function initNovaPoshtaAutocomplete() {
                 warehouseDropdown.innerHTML = filtered.map(wh => {
                     // Для поштоматов используем shortAddress, если он есть
                     const shortAddr = wh.shortAddress || '';
-                    const displayName = wh.name || '';
+                    const displayName = wh.type === 'Postomat'
+                        ? `Поштомат №${wh.number}${wh.shortAddress ? ', ' + wh.shortAddress : ''}`
+                        : wh.name;
                     const displayDesc = wh.type === 'Postomat' && shortAddr ? shortAddr : (shortAddr || displayName);
                     
                     return `
@@ -822,7 +824,9 @@ async function loadWarehouses(cityRef, cityName = null) {
         warehouseDropdown.innerHTML = warehouses.map(wh => {
             // Для поштоматов используем shortAddress, если он есть
             const shortAddr = wh.shortAddress || '';
-            const displayName = wh.name || '';
+            const displayName = wh.type === 'Postomat'
+                ? `Поштомат №${wh.number}${wh.shortAddress ? ', ' + wh.shortAddress : ''}`
+                : wh.name;
             const displayDesc = wh.type === 'Postomat' && shortAddr ? shortAddr : (shortAddr || displayName);
             
             return `
