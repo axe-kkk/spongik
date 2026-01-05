@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід — Spongik</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="alternate icon" href="../assets/images/favicon.ico">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: var(--color-cream);
+        }
+        
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            padding: 40px 32px;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .auth-logo a {
+            font-family: var(--font-display);
+            font-size: 28px;
+            letter-spacing: 0.05em;
+        }
+        
+        .auth-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        .auth-subtitle {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--color-cream);
+            border-radius: var(--radius-full);
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            border-radius: var(--radius-full);
+            color: var(--color-text-secondary);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        
+        .auth-tab.is-active {
+            background: var(--color-white);
+            color: var(--color-text);
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.is-active {
+            display: block;
+        }
+        
+        .auth-form .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .auth-form .form-label {
+            margin-bottom: 6px;
+        }
+        
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 24px 0;
+            color: var(--color-text-muted);
+            font-size: 13px;
+        }
+        
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        
+        .auth-footer a {
+            color: var(--color-pink);
+            font-weight: 500;
+        }
+        
+        .auth-error {
+            background: #FEE2E2;
+            color: var(--color-error);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        
+        .auth-error.is-visible {
+            display: block;
+        }
+        
+        .forgot-link {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-top: 8px;
+        }
+        
+        .forgot-link:hover {
+            color: var(--color-pink);
+        }
+    </style>
+</head>
+<body>
+    <main class="auth-page">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <a href="/">Spongik</a>
+            </div>
+            
+            <h1 class="auth-title">Вітаємо!</h1>
+            <p class="auth-subtitle">Увійдіть або створіть акаунт</p>
+            
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab is-active" data-tab="login">Вхід</button>
+                <button class="auth-tab" data-tab="register">Реєстрація</button>
+            </div>
+            
+            <!-- Error message -->
+            <div class="auth-error" id="auth-error"></div>
+            
+            <!-- Login Form -->
+            <form class="auth-form is-active" id="login-form" data-form="login">
+                <div class="form-group">
+                    <label class="form-label" for="login-email">Email або телефон</label>
+                    <input type="text" 
+                           class="input input--lg" 
+                           id="login-email" 
+                           name="email"
+                           placeholder="email@example.com"
+                           required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="login-password">Пароль</label>
+                    <input type="password" 
+                           class="input input--lg" 
+                           id="login-password" 
+                           name="password"
+                           placeholder="••••••••"
+                           required>
+                </div>
+                
+                <button type="submit" class="btn btn--primary btn--lg btn--full">
+                    Увійти
+                </button>
+            </form>
+            
+            <!-- Register Form -->
+            <form class="auth-form" id="register-form" data-form="register">
+                <div class="form-group">
+                    <label class="form-label" for="register-name">Ім'я</label>
+                    <input type="text" 
+                           class="input input--lg" 
+                           id="register-name" 
+                           name="name"
+                           placeholder="Олена"
+                           required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="register-email">Email</label>
+                    <input type="email" 
+                           class="input input--lg" 
+                           id="register-email" 
+                           name="email"
+                           placeholder="email@example.com"
+                           required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="register-phone">Телефон</label>
+                    <input type="tel" 
+                           class="input input--lg" 
+                           id="register-phone" 
+                           name="phone"
+                           placeholder="+380 99 123 45 67">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="register-password">Пароль</label>
+                    <input type="password" 
+                           class="input input--lg" 
+                           id="register-password" 
+                           name="password"
+                           placeholder="Мінімум 6 символів"
+                           required
+                           minlength="6">
+                </div>
+                
+                <button type="submit" class="btn btn--primary btn--lg btn--full">
+                    Створити акаунт
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <a href="/">← Повернутись на головну</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check if already logged in
+        (async () => {
+            try {
+                const res = await fetch('/api/auth/me', { credentials: 'include' });
+                if (res.ok) {
+                    const user = await res.json();
+                    if (user.role === 'admin') {
+                        window.location.href = '/admin';
+                    } else {
+                        window.location.href = '/pages/account';
+                    }
+                }
+            } catch (e) {}
+        })();
+        
+        // Tab switching
+        const tabs = document.querySelectorAll('.auth-tab');
+        const forms = document.querySelectorAll('.auth-form');
+        const errorEl = document.getElementById('auth-error');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('is-active'));
+                forms.forEach(f => f.classList.remove('is-active'));
+                
+                tab.classList.add('is-active');
+                document.querySelector(`[data-form="${target}"]`).classList.add('is-active');
+                
+                errorEl.classList.remove('is-visible');
+            });
+        });
+        
+        function showError(message) {
+            errorEl.textContent = message;
+            errorEl.classList.add('is-visible');
+        }
+        
+        // Login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorEl.classList.remove('is-visible');
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ login: email, password })
+                });
+                
+                if (res.ok) {
+                    const user = await res.json();
+                    // Админ → админка, юзер → профиль
+                    if (user.role === 'admin') {
+                        window.location.href = '/admin';
+                    } else {
+                        window.location.href = '/pages/account';
+                    }
+                } else {
+                    const data = await res.json();
+                    showError(data.detail || 'Невірний email або пароль');
+                }
+            } catch (err) {
+                showError('Помилка з\'єднання');
+            }
+        });
+        
+        // Register
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorEl.classList.remove('is-visible');
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const phone = document.getElementById('register-phone').value;
+            const password = document.getElementById('register-password').value;
+            
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ 
+                        first_name: name,
+                        email, 
+                        phone: phone || null,
+                        password 
+                    })
+                });
+                
+                if (res.ok) {
+                    window.location.href = '/pages/account';
+                } else {
+                    const data = await res.json();
+                    showError(data.detail || 'Помилка реєстрації');
+                }
+            } catch (err) {
+                showError('Помилка з\'єднання');
+            }
+        });
+    </script>
+</body>
+</html>
+

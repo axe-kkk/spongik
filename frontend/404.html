@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Сторінку не знайдено | Spongik</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&family=Tenor+Sans&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-cream: #F3EBD8;
+            --color-pink: #F297A0;
+            --color-pink-hover: #E8868F;
+            --color-text: #2B2B2B;
+            --color-text-secondary: #6B6B6B;
+            --font-display: 'Tenor Sans', Georgia, serif;
+            --font-body: 'Manrope', -apple-system, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-cream);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .error-page {
+            max-width: 480px;
+        }
+        
+        .error-code {
+            font-family: var(--font-display);
+            font-size: 120px;
+            font-weight: 400;
+            line-height: 1;
+            color: var(--color-pink);
+            margin-bottom: 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .error-code {
+                font-size: 180px;
+            }
+        }
+        
+        .error-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            margin-bottom: 16px;
+            letter-spacing: 0.02em;
+        }
+        
+        .error-text {
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .error-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        @media (min-width: 480px) {
+            .error-actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .btn--primary {
+            background-color: var(--color-pink);
+            color: white;
+        }
+        
+        .btn--primary:hover {
+            background-color: var(--color-pink-hover);
+            transform: translateY(-2px);
+        }
+        
+        .btn--secondary {
+            background-color: transparent;
+            color: var(--color-text);
+            border: 1px solid var(--color-text);
+        }
+        
+        .btn--secondary:hover {
+            background-color: var(--color-text);
+            color: white;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            font-family: var(--font-display);
+            font-size: 20px;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="logo">Spongik</a>
+    
+    <div class="error-page">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Сторінку не знайдено</h1>
+        <p class="error-text">
+            На жаль, сторінка, яку ви шукаєте, не існує або була переміщена. 
+            Можливо, ви перейшли за застарілим посиланням.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="btn btn--primary">На головну</a>
+            <a href="/pages/catalog" class="btn btn--secondary">До каталогу</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

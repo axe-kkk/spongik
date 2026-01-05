@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмін — Spongik</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar__logo">
+                <a href="/admin">Spongik</a>
+                <span class="sidebar__badge">Admin</span>
+            </div>
+            
+            <nav class="sidebar__nav">
+                <a href="#dashboard" class="sidebar__link is-active" data-page="dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    <span>Дашборд</span>
+                </a>
+                <a href="#orders" class="sidebar__link" data-page="orders">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    <span>Замовлення</span>
+                </a>
+                <a href="#products" class="sidebar__link" data-page="products">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                    <span>Товари</span>
+                </a>
+                <a href="#categories" class="sidebar__link" data-page="categories">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 6h16M4 12h16M4 18h7"/>
+                    </svg>
+                    <span>Категорії</span>
+                </a>
+                <a href="#promotions" class="sidebar__link" data-page="promotions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Акції</span>
+                </a>
+                <a href="#users" class="sidebar__link" data-page="users">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                    </svg>
+                    <span>Користувачі</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar__footer">
+                <a href="/" class="sidebar__link sidebar__link--secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span>На сайт</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header__left">
+                    <button class="sidebar-toggle" id="sidebar-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    <h1 class="admin-header__title" id="page-title">Дашборд</h1>
+                </div>
+                <div class="admin-header__right">
+                    <span class="admin-header__user" id="admin-name">Admin</span>
+                    <button class="btn btn--sm btn--ghost" id="logout-btn">Вийти</button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="admin-content" id="dashboard-page">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card__label">Сьогодні</div>
+                        <div class="stat-card__value" id="stat-orders-today">—</div>
+                        <div class="stat-card__sub">замовлень</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__label">Сьогодні</div>
+                        <div class="stat-card__value" id="stat-revenue-today">—</div>
+                        <div class="stat-card__sub">виручка</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__label">Місяць</div>
+                        <div class="stat-card__value" id="stat-orders-month">—</div>
+                        <div class="stat-card__sub">замовлень</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__label">Місяць</div>
+                        <div class="stat-card__value" id="stat-revenue-month">—</div>
+                        <div class="stat-card__sub">виручка</div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card__header">
+                            <h3 class="chart-card__title">Продажі за 30 днів</h3>
+                        </div>
+                        <div class="chart-card__body">
+                            <canvas id="sales-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card chart-card--sm">
+                        <div class="chart-card__header">
+                            <h3 class="chart-card__title">Топ товари</h3>
+                        </div>
+                        <div class="chart-card__body">
+                            <div class="top-products" id="top-products">
+                                <!-- Loaded by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="table-card">
+                    <div class="table-card__header">
+                        <h3 class="table-card__title">Останні замовлення</h3>
+                        <a href="#orders" class="btn btn--sm btn--ghost">Всі</a>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Номер</th>
+                                    <th>Клієнт</th>
+                                    <th>Сума</th>
+                                    <th>Предоплата</th>
+                                    <th>Статус</th>
+                                    <th>Дата</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-orders">
+                                <!-- Loaded by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Page -->
+            <div class="admin-content" id="orders-page" style="display: none;">
+                <div class="filters-bar">
+                    <div class="filters-bar__search">
+                        <svg class="filters-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" class="filters-bar__input" placeholder="Пошук по телефону або номеру замовлення..." id="filter-phone">
+                    </div>
+                    <div class="filters-bar__selects">
+                        <div class="custom-select custom-select--sm" data-name="filter-status" id="filter-status-wrap">
+                            <input type="hidden" name="filter-status" id="filter-status" value="">
+                            <button type="button" class="custom-select__trigger">
+                                <span class="custom-select__text custom-select__placeholder">Статус</span>
+                            </button>
+                            <div class="custom-select__dropdown">
+                                <div class="custom-select__option is-selected" data-value="">Всі статуси</div>
+                                <div class="custom-select__option" data-value="pending">Очікує</div>
+                                <div class="custom-select__option" data-value="confirmed">Підтверджено</div>
+                                <div class="custom-select__option" data-value="processing">Обробляється</div>
+                                <div class="custom-select__option" data-value="shipped">Відправлено</div>
+                                <div class="custom-select__option" data-value="delivered">Доставлено</div>
+                                <div class="custom-select__option" data-value="cancelled">Скасовано</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-card">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Номер</th>
+                                    <th>Клієнт</th>
+                                    <th>Телефон</th>
+                                    <th>Email</th>
+                                    <th>Товари</th>
+                                    <th>Сума</th>
+                                    <th>Оплата</th>
+                                    <th>Предоплата</th>
+                                    <th>Статус</th>
+                                    <th>Дата</th>
+                                    <th style="width: 50px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table">
+                                <!-- Loaded by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination" id="orders-pagination"></div>
+                </div>
+            </div>
+
+            <!-- Products Page -->
+            <div class="admin-content" id="products-page" style="display: none;">
+                <div class="filters-bar">
+                    <div class="filters-bar__search">
+                        <svg class="filters-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" class="filters-bar__input" placeholder="Пошук по назві, артикулу..." id="products-search">
+                    </div>
+                    <div class="filters-bar__selects">
+                        <div class="custom-select custom-select--sm" data-name="filter-category" id="filter-category-wrap">
+                            <input type="hidden" name="filter-category" id="filter-category" value="">
+                            <button type="button" class="custom-select__trigger">
+                                <span class="custom-select__text custom-select__placeholder">Категорія</span>
+                            </button>
+                            <div class="custom-select__dropdown" id="filter-category-options">
+                                <div class="custom-select__option is-selected" data-value="">Всі категорії</div>
+                            </div>
+                        </div>
+                        <div class="custom-select custom-select--sm" data-name="filter-stock" id="filter-stock-wrap">
+                            <input type="hidden" name="filter-stock" id="filter-stock" value="">
+                            <button type="button" class="custom-select__trigger">
+                                <span class="custom-select__text custom-select__placeholder">Наявність</span>
+                            </button>
+                            <div class="custom-select__dropdown">
+                                <div class="custom-select__option is-selected" data-value="">Всі</div>
+                                <div class="custom-select__option" data-value="in_stock">В наявності</div>
+                                <div class="custom-select__option" data-value="out_of_stock">Немає</div>
+                            </div>
+                        </div>
+                        <div class="custom-select custom-select--sm" data-name="filter-active" id="filter-active-wrap">
+                            <input type="hidden" name="filter-active" id="filter-active" value="">
+                            <button type="button" class="custom-select__trigger">
+                                <span class="custom-select__text custom-select__placeholder">Статус</span>
+                            </button>
+                            <div class="custom-select__dropdown">
+                                <div class="custom-select__option is-selected" data-value="">Всі</div>
+                                <div class="custom-select__option" data-value="active">Активні</div>
+                                <div class="custom-select__option" data-value="inactive">Неактивні</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn--primary" id="add-product-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 5v14m-7-7h14"/></svg>
+                        Додати товар
+                    </button>
+                </div>
+                
+                <div class="table-card">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="select-all-products"></th>
+                                    <th>Фото</th>
+                                    <th>Назва</th>
+                                    <th>Артикул</th>
+                                    <th>Ціна</th>
+                                    <th>Наявність</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table">
+                                <!-- Loaded by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination" id="products-pagination"></div>
+                </div>
+                
+                <div class="bulk-actions" id="bulk-actions" style="display: none;">
+                    <span id="selected-count">0 обрано</span>
+                    <button class="btn btn--sm btn--ghost" id="bulk-activate">Активувати</button>
+                    <button class="btn btn--sm btn--ghost" id="bulk-deactivate">Деактивувати</button>
+                    <button class="btn btn--sm btn--ghost" id="bulk-price">Змінити ціну</button>
+                    <button class="btn btn--sm btn--ghost" id="bulk-promo">Додати акцію</button>
+                </div>
+            </div>
+
+            <!-- Categories Page -->
+            <div class="admin-content" id="categories-page" style="display: none;">
+                <div class="filters-bar">
+                    <div class="filters-bar__search">
+                        <svg class="filters-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" class="filters-bar__input" placeholder="Пошук категорій..." id="categories-search">
+                    </div>
+                    <button class="btn btn--primary" id="add-category-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 5v14m-7-7h14"/></svg>
+                        Додати категорію
+                    </button>
+                </div>
+                
+                <div class="table-card">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Назва</th>
+                                    <th>Slug</th>
+                                    <th>Товарів</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="categories-table">
+                                <!-- Loaded by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promotions Page -->
+            <div class="admin-content" id="promotions-page" style="display: none;">
+                <div class="filters-bar">
+                    <div class="filters-bar__search">
+                        <svg class="filters-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" class="filters-bar__input" placeholder="Пошук акцій..." id="promotions-search">
+                    </div>
+                    <p class="filters-bar__hint">Акції створюються через вибір товарів</p>
+                </div>
+                
+                <div class="table-card">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Назва</th>
+                                    <th>Знижка</th>
+                                    <th>Товари</th>
+                                    <th>Період</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="promotions-table">
+                                <!-- Loaded by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Page -->
+            <div class="admin-content" id="users-page" style="display: none;">
+                <div class="filters-bar">
+                    <div class="filters-bar__search">
+                        <svg class="filters-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" class="filters-bar__input" placeholder="Пошук по email, телефону..." id="users-search">
+                    </div>
+                </div>
+                
+                <div class="table-card">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Телефон</th>
+                                    <th>Ім'я</th>
+                                    <th>Роль</th>
+                                    <th>Статус</th>
+                                    <th>Реєстрація</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table">
+                                <!-- Loaded by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <div class="modal__header">
+                <h3 class="modal__title" id="modal-title">Modal</h3>
+                <button class="modal__close" id="modal-close">×</button>
+            </div>
+            <div class="modal__body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirm-overlay">
+        <div class="modal modal--sm">
+            <div class="modal__body" style="text-align: center; padding: 30px;">
+                <p id="confirm-message" style="font-size: 16px; margin-bottom: 24px;"></p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button class="btn btn--secondary" id="confirm-no">Скасувати</button>
+                    <button class="btn btn--primary" id="confirm-yes">Так, видалити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="/admin/admin.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spongik — Корейская косметика в Одессе</title>
+    <meta name="description" content="Оригинальная корейская косметика с доставкой по Одессе. COSRX, Beauty of Joseon, Anua и другие бренды.">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="alternate icon" href="../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header__inner container">
+            <a href="/" class="logo">Spongik</a>
+            
+            <div class="header__search">
+                <div class="search-wrapper">
+                    <input type="search" class="search-input" placeholder="Поиск товаров..." aria-label="Поиск">
+                </div>
+            </div>
+            
+            <nav class="nav">
+                <a href="/catalog" class="nav__link">Каталог</a>
+                <a href="/brands" class="nav__link">Бренды</a>
+                <a href="/about" class="nav__link">Про нас</a>
+            </nav>
+            
+            <div class="header__actions">
+                <button class="header__btn menu-btn" aria-label="Меню">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                
+                <button class="header__btn" aria-label="Поиск">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                </button>
+                
+                <a href="/pages/favorites" class="header__btn" aria-label="Избранное">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </a>
+                
+                <button class="header__btn cart-btn" aria-label="Кошик">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2"/>
+                        <circle cx="9" cy="20" r="1.5"/>
+                        <circle cx="18" cy="20" r="1.5"/>
+                    </svg>
+                    <span class="cart-btn__count" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero__content container">
+                <h1 class="hero__title">НАТУРАЛЬНЫЙ УХОД</h1>
+                <p class="hero__subtitle">Оригинальная корейская косметика с доставкой по Одессе за 1-2 дня</p>
+                <a href="/catalog" class="btn btn--primary btn--lg">Смотреть каталог</a>
+            </div>
+        </section>
+
+        <!-- Trust Bar -->
+        <section class="trust-bar">
+            <div class="trust-bar__inner container">
+                <div class="trust-bar__item">
+                    <span class="trust-bar__icon">🌿</span>
+                    <span>100% оригинал</span>
+                </div>
+                <div class="trust-bar__item">
+                    <span class="trust-bar__icon">🚚</span>
+                    <span>Доставка 1-2 дня</span>
+                </div>
+                <div class="trust-bar__item">
+                    <span class="trust-bar__icon">💝</span>
+                    <span>Подарок к заказу</span>
+                </div>
+                <div class="trust-bar__item">
+                    <span class="trust-bar__icon">💬</span>
+                    <span>Консультация</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bestsellers -->
+        <section class="section">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">Бестселери</h2>
+                </div>
+                
+                <div class="grid grid--products" id="products-grid">
+                    <!-- Product cards will be loaded here -->
+                    
+                    <!-- Example Product Card -->
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <div class="product-card__badges">
+                                <span class="badge badge--new">New</span>
+                            </div>
+                            <button class="product-card__favorite" aria-label="В избранное">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                            <div class="product-card__placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <path d="M21 15l-5-5L5 21"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="product-card__body">
+                            <span class="product-card__brand">COSRX</span>
+                            <h3 class="product-card__name">Advanced Snail 96 Mucin Power Essence</h3>
+                            <div class="product-card__price">
+                                <span class="product-card__price-current">890 ₴</span>
+                            </div>
+                            <div class="product-card__actions">
+                                <button class="btn btn--secondary btn--full btn--sm">До кошика</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product with sale -->
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <div class="product-card__badges">
+                                <span class="badge badge--sale">-20%</span>
+                            </div>
+                            <button class="product-card__favorite" aria-label="В избранное">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                            <div class="product-card__placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <path d="M21 15l-5-5L5 21"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="product-card__body">
+                            <span class="product-card__brand">Beauty of Joseon</span>
+                            <h3 class="product-card__name">Glow Serum Propolis + Niacinamide</h3>
+                            <div class="product-card__price">
+                                <span class="product-card__price-old">720 ₴</span>
+                                <span class="product-card__price-current product-card__price-sale">576 ₴</span>
+                            </div>
+                            <div class="product-card__actions">
+                                <button class="btn btn--secondary btn--full btn--sm">До кошика</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- More products -->
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <button class="product-card__favorite is-active" aria-label="В избранное">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                            <div class="product-card__placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <path d="M21 15l-5-5L5 21"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="product-card__body">
+                            <span class="product-card__brand">Anua</span>
+                            <h3 class="product-card__name">Heartleaf Pore Control Cleansing Oil</h3>
+                            <div class="product-card__price">
+                                <span class="product-card__price-current">650 ₴</span>
+                            </div>
+                            <div class="product-card__actions">
+                                <button class="btn btn--secondary btn--full btn--sm">До кошика</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <div class="product-card__badges">
+                                <span class="badge badge--eco">Eco</span>
+                            </div>
+                            <button class="product-card__favorite" aria-label="В избранное">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                            <div class="product-card__placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <path d="M21 15l-5-5L5 21"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="product-card__body">
+                            <span class="product-card__brand">Skin1004</span>
+                            <h3 class="product-card__name">Madagascar Centella Ampoule</h3>
+                            <div class="product-card__price">
+                                <span class="product-card__price-current">780 ₴</span>
+                            </div>
+                            <div class="product-card__actions">
+                                <button class="btn btn--secondary btn--full btn--sm">До кошика</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="text-center mt-8">
+                    <a href="/catalog" class="btn btn--primary">Все товары</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skeleton Example (hidden by default) -->
+        <section class="section" style="display: none;">
+            <div class="container">
+                <h2 class="section__title mb-6">Skeleton Loaders</h2>
+                <div class="grid grid--products">
+                    <article class="product-card product-card--skeleton">
+                        <div class="product-card__image">
+                            <div class="skeleton skeleton--image"></div>
+                        </div>
+                        <div class="product-card__body">
+                            <div class="skeleton skeleton--text" style="width: 40%;"></div>
+                            <div class="skeleton skeleton--text"></div>
+                            <div class="skeleton skeleton--text"></div>
+                            <div class="skeleton skeleton--btn mt-3"></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__inner container">
+            <div class="footer__brand">
+                <a href="/" class="footer__logo">Spongik</a>
+                <p class="footer__tagline">Корейська косметика в Одесі</p>
+            </div>
+            <div class="footer__contacts">
+                <a href="tel:+380634242497" class="footer__phone">+380 63 424 24 97</a>
+                <a href="tel:+380687961552" class="footer__phone">+380 68 796 15 52</a>
+            </div>
+            <div class="footer__social">
+                <a href="https://www.instagram.com/spongik.od/" target="_blank" class="footer__social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="18" cy="6" r="1"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer__bottom container">
+            <p class="footer__copy">© 2025 Spongik. Одеса, Україна</p>
+        </div>
+    </footer>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast">Товар додано до кошика</div>
+
+    <script type="module" src="../assets/js/app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spongik — Гребінці та щітки для волосся</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    <link rel="alternate icon" href="/assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__inner container">
+            <button class="menu-btn" id="menu-toggle" aria-label="Меню">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <a href="/" class="logo">Spongik</a>
+            <nav class="nav" id="main-nav">
+                <button class="nav__close" id="nav-close" aria-label="Закрити меню">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                <a href="/pages/catalog" class="nav__link">Каталог</a>
+                <a href="/pages/about" class="nav__link">Про нас</a>
+                <a href="https://www.instagram.com/spongik.od/" target="_blank" class="nav__link">Instagram</a>
+            </nav>
+            <div class="header__actions">
+                <a href="/pages/login" class="header__btn" aria-label="Вхід">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
+                <a href="/pages/cart" class="header__btn cart-btn" aria-label="Кошик">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2"/>
+                        <circle cx="9" cy="20" r="1.5"/>
+                        <circle cx="18" cy="20" r="1.5"/>
+                    </svg>
+                    <span class="cart-btn__count" id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+        <div class="nav-overlay" id="nav-overlay"></div>
+    </header>
+
+    <main class="main">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>ПРОФЕСІЙНІ BEAUTY-ТОВАРИ</h1>
+                <p>Гребінці, щітки та аксесуари для краси</p>
+                <a href="/pages/catalog" class="btn btn--primary btn--lg">Переглянути каталог</a>
+            </div>
+        </section>
+
+        <!-- Trust bar -->
+        <section class="trust-bar">
+            <div class="trust-items">
+                <div class="trust-item">
+                    <div class="trust-item__icon">✨</div>
+                    <div class="trust-item__content">
+                        <span class="trust-item__title">Гарантія якості</span>
+                        <span class="trust-item__desc">Тільки оригінальна продукція</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-item__icon">🚚</div>
+                    <div class="trust-item__content">
+                        <span class="trust-item__title">Доставка по Україні</span>
+                        <span class="trust-item__desc">Нова Пошта, Укрпошта</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-item__icon">⚡</div>
+                    <div class="trust-item__content">
+                        <span class="trust-item__title">Швидке відправлення</span>
+                        <span class="trust-item__desc">В день замовлення</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-item__icon">💬</div>
+                    <div class="trust-item__content">
+                        <span class="trust-item__title">Консультація</span>
+                        <span class="trust-item__desc">Допоможемо з вибором</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalog -->
+        <section class="catalog" id="catalog">
+            <h2>Бестселери</h2>
+            
+            <div class="products-grid">
+                <!-- Loaded dynamically -->
+            </div>
+
+            <a href="/pages/catalog" class="btn btn--secondary">Усі товари</a>
+        </section>
+
+        <!-- Categories -->
+        <section class="routine-section">
+            <div class="container">
+                <div class="routine-header">
+                    <span class="routine-label">Каталог</span>
+                    <h2>Наші категорії</h2>
+                    <p>Все для перукарень, салонів краси та дому</p>
+                </div>
+                <div class="routine-steps">
+                    <div class="routine-step">
+                        <div class="routine-step__number">💇</div>
+                        <div class="routine-step__content">
+                            <h3>Гребінці Salon Professional</h3>
+                            <p>Професійні гребінці для будь-якого типу волосся</p>
+                        </div>
+                        <a href="/pages/catalog?category=combs" class="routine-step__link">Обрати →</a>
+                    </div>
+                    <div class="routine-step">
+                        <div class="routine-step__number">🦶</div>
+                        <div class="routine-step__content">
+                            <h3>Педикюрні терки</h3>
+                            <p>Терки для професійного педикюру</p>
+                        </div>
+                        <a href="/pages/catalog?category=pedicure" class="routine-step__link">Обрати →</a>
+                    </div>
+                    <div class="routine-step">
+                        <div class="routine-step__number">💅</div>
+                        <div class="routine-step__content">
+                            <h3>Пилочки для нігтів</h3>
+                            <p>Пилочки різної абразивності для манікюру</p>
+                        </div>
+                        <a href="/pages/catalog?category=nailfiles" class="routine-step__link">Обрати →</a>
+                    </div>
+                    <div class="routine-step">
+                        <div class="routine-step__number">🖌️</div>
+                        <div class="routine-step__content">
+                            <h3>Пензлі для макіяжу</h3>
+                            <p>Професійні пензлі для візажистів</p>
+                        </div>
+                        <a href="/pages/catalog?category=brushes" class="routine-step__link">Обрати →</a>
+                    </div>
+                    <div class="routine-step">
+                        <div class="routine-step__number">🧽</div>
+                        <div class="routine-step__content">
+                            <h3>Спонжі</h3>
+                            <p>Спонжі для нанесення макіяжу</p>
+                        </div>
+                        <a href="/pages/catalog?category=sponges" class="routine-step__link">Обрати →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brands Marquee -->
+        <section class="brands-section">
+            <div class="brands-marquee">
+                <div class="brands-track" aria-hidden="true">
+                    <span class="brand-name">Гребінці</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пензлі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Спонжі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пилочки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Терки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Гребінці</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пензлі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Спонжі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пилочки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Терки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Гребінці</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пензлі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Спонжі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пилочки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Терки</span>
+                    <span class="brand-dot">●</span>
+                </div>
+                <div class="brands-track" aria-hidden="true">
+                    <span class="brand-name">Гребінці</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пензлі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Спонжі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пилочки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Терки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Гребінці</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пензлі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Спонжі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пилочки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Терки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Гребінці</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пензлі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Спонжі</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Пилочки</span>
+                    <span class="brand-dot">●</span>
+                    <span class="brand-name">Терки</span>
+                    <span class="brand-dot">●</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features-section">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-card__icon">⚡</div>
+                        <h3>Швидко</h3>
+                        <p>Відправка в день замовлення</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card__icon">✅</div>
+                        <h3>Якість</h3>
+                        <p>Європейські та азіатські виробники</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card__icon">💬</div>
+                        <h3>Підтримка</h3>
+                        <p>Ввічливий менеджер допоможе</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card__icon">💰</div>
+                        <h3>Ціни</h3>
+                        <p>Лояльна цінова політика</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-card">
+                    <div class="cta-content">
+                        <h2>Потрібна консультація?</h2>
+                        <p>Допоможемо підібрати товари для вашого салону або особистого використання</p>
+                    </div>
+                    <a href="https://ig.me/m/spongik.od" target="_blank" class="cta-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="5"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="18" cy="6" r="1"/>
+                        </svg>
+                        Написати в Instagram
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__inner container">
+            <div class="footer__brand">
+                <a href="/" class="footer__logo">Spongik</a>
+                <p class="footer__tagline">Професійні beauty-товари для салонів краси, перукарень та дому</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/spongik.od/" target="_blank" class="footer__social-link" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="5"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="18" cy="6" r="1"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer__nav">
+                <h4 class="footer__nav-title">Каталог</h4>
+                <ul class="footer__nav-list">
+                    <li><a href="/pages/catalog" class="footer__nav-link">Всі товари</a></li>
+                    <li><a href="/pages/catalog?category=combs" class="footer__nav-link">Гребінці</a></li>
+                    <li><a href="/pages/catalog?category=brushes" class="footer__nav-link">Пензлі</a></li>
+                    <li><a href="/pages/catalog?category=sponges" class="footer__nav-link">Спонжі</a></li>
+                    <li><a href="/pages/catalog?category=nailfiles" class="footer__nav-link">Пилочки</a></li>
+                    <li><a href="/pages/catalog?category=pedicure" class="footer__nav-link">Терки</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer__nav">
+                <h4 class="footer__nav-title">Інформація</h4>
+                <ul class="footer__nav-list">
+                    <li><a href="#about" class="footer__nav-link">Про нас</a></li>
+                    <li><a href="https://ig.me/m/spongik.od" target="_blank" class="footer__nav-link">Написати нам</a></li>
+                    <li><a href="/pages/cart" class="footer__nav-link">Кошик</a></li>
+                    <li><a href="/pages/account" class="footer__nav-link">Особистий кабінет</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer__contacts">
+                <h4 class="footer__nav-title">Контакти</h4>
+                <div class="footer__contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 2 0 0122 16.92z"/>
+                    </svg>
+                    <div>
+                        <a href="tel:+380634242497" class="footer__phone">+380 63 424 24 97</a>
+                        <a href="tel:+380687961552" class="footer__phone">+380 68 796 15 52</a>
+                    </div>
+                </div>
+                <div class="footer__contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <div>
+                        <span>Одеса, Україна</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom container">
+            <p class="footer__copy">© 2025 Spongik. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог — Spongik</title>
+    <meta name="description" content="Корейская косметика: сыворотки, тонеры, маски, кремы. Доставка по Одессе.">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="alternate icon" href="../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/catalog.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header__inner container">
+            <button class="menu-btn" id="menu-toggle" aria-label="Меню">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <a href="/" class="logo">Spongik</a>
+            <nav class="nav" id="main-nav">
+                <button class="nav__close" id="nav-close" aria-label="Закрити меню">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                <a href="/pages/catalog" class="nav__link nav__link--active">Каталог</a>
+                <a href="/pages/about" class="nav__link">Про нас</a>
+                <a href="https://www.instagram.com/spongik.od/" target="_blank" class="nav__link">Instagram</a>
+            </nav>
+            <div class="header__actions">
+                <a href="/pages/login" class="header__btn" aria-label="Вхід">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
+                <a href="/pages/favorites" class="header__btn" aria-label="Обране">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </a>
+                <a href="/pages/cart" class="header__btn cart-btn" aria-label="Кошик">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2"/>
+                        <circle cx="9" cy="20" r="1.5"/>
+                        <circle cx="18" cy="20" r="1.5"/>
+                    </svg>
+                    <span class="cart-btn__count" id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+        <div class="nav-overlay" id="nav-overlay"></div>
+    </header>
+
+    <main class="main">
+        <!-- Catalog Header -->
+        <section class="catalog-header">
+            <div class="container">
+                <h1 class="catalog-header__title">Каталог</h1>
+                <p class="catalog-header__count" id="products-count">Загрузка...</p>
+            </div>
+        </section>
+
+        <!-- Catalog Toolbar -->
+        <div class="catalog-toolbar">
+            <div class="container">
+                <div class="catalog-toolbar__inner">
+                    <!-- Filter Toggle Button (Mobile) -->
+                    <button class="filter-toggle" id="filter-toggle" aria-label="Відкрити фільтри">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 6h18M3 12h18M3 18h18"/>
+                        </svg>
+                        <span>Фільтри</span>
+                    </button>
+                    
+                    <!-- Search Input -->
+                    <div class="catalog-search">
+                        <svg class="catalog-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        <input type="text" 
+                               class="catalog-search__input" 
+                               id="search-input" 
+                               placeholder="Пошук за назвою або артикулом...">
+                        <button class="catalog-search__clear" id="search-clear" aria-label="Очистити пошук" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 6L6 18M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Sort -->
+                    <div class="sort-wrapper">
+                        <div class="custom-select" id="sort-select-wrapper">
+                            <button type="button" class="custom-select__trigger" id="sort-select-trigger">
+                                <span class="custom-select__text">Новинки</span>
+                                <svg class="custom-select__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </button>
+                            <input type="hidden" id="sort-select-input" value="newest">
+                            <div class="custom-select__dropdown">
+                                <div class="custom-select__option is-selected" data-value="newest">Новинки</div>
+                                <div class="custom-select__option" data-value="price_asc">Ціна: низька → висока</div>
+                                <div class="custom-select__option" data-value="price_desc">Ціна: висока → низька</div>
+                                <div class="custom-select__option" data-value="name">За назвою</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="catalog-content">
+            <div class="container">
+                <div class="catalog-layout">
+                    <!-- Sidebar Filters (desktop) -->
+                    <aside class="catalog-sidebar" id="catalog-sidebar">
+                        <div class="filters">
+                            <div class="filters__header">
+                                <h3 class="filters__title">Фільтри</h3>
+                                <div class="filters__header-actions">
+                                    <button class="filters__collapse-all" id="collapse-all-filters" aria-label="Згорнути все" title="Згорнути всі фільтри">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M18 12H6M12 6l-6 6 6 6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="filters__close" id="filter-close" aria-label="Закрити">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M18 6L6 18M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Active Filters -->
+                            <div class="filters__active" id="active-filters-tags"></div>
+                            
+                            <!-- Reset Button -->
+                            <div class="filters__reset-top">
+                                <button class="btn btn--outline btn--full" id="reset-filters">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; margin-right: 8px;">
+                                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    </svg>
+                                    Скинути фільтри
+                                </button>
+                            </div>
+                            
+                            <!-- Categories -->
+                            <div class="filter-group" data-accordion>
+                                <button class="filter-group__header" type="button">
+                                    <h4 class="filter-group__title">
+                                        <svg class="filter-group__title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M4 7h16M4 12h16M4 17h7"/>
+                                        </svg>
+                                        Категорія
+                                    </h4>
+                                    <svg class="filter-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M6 9l6 6 6-6"/>
+                                    </svg>
+                                </button>
+                                <div class="filter-group__content">
+                                    <div class="filter-group__content-inner">
+                                        <div class="category-search">
+                                            <input type="text" class="category-search__input" id="category-search" placeholder="Пошук категорії...">
+                                        </div>
+                                        <div class="category-filters" id="category-filters">
+                                            <!-- Loaded dynamically -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Price Range -->
+                            <div class="filter-group" data-accordion>
+                                <button class="filter-group__header" type="button">
+                                    <h4 class="filter-group__title">
+                                        <svg class="filter-group__title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                        </svg>
+                                        Ціна
+                                    </h4>
+                                    <svg class="filter-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M6 9l6 6 6-6"/>
+                                    </svg>
+                                </button>
+                                <div class="filter-group__content">
+                                    <div class="filter-group__content-inner">
+                                        <div class="price-range">
+                                            <div class="price-range__display">
+                                                <span class="price-range__value" id="price-min-display">0</span>
+                                                <span class="price-range__separator">—</span>
+                                                <span class="price-range__value" id="price-max-display">∞</span>
+                                                <span class="price-range__currency">₴</span>
+                                            </div>
+                                            <div class="price-range__slider-wrapper">
+                                                <input type="range" class="price-range__slider price-range__slider--min" id="price-min-slider" min="0" max="10000" step="10" value="0">
+                                                <input type="range" class="price-range__slider price-range__slider--max" id="price-max-slider" min="0" max="10000" step="10" value="10000">
+                                            </div>
+                                            <div class="price-range__inputs">
+                                                <div class="price-input-wrapper">
+                                                    <label class="price-input-label">Від</label>
+                                                    <input type="number" class="price-input" id="price-min" placeholder="0" min="0" step="50">
+                                                </div>
+                                                <div class="price-input-wrapper">
+                                                    <label class="price-input-label">До</label>
+                                                    <input type="number" class="price-input" id="price-max" placeholder="∞" min="0" step="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Filters -->
+                            <div class="filter-group" data-accordion>
+                                <button class="filter-group__header" type="button">
+                                    <h4 class="filter-group__title">
+                                        <svg class="filter-group__title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 0 1.946-.806A3.42 3.42 0 0 0 21 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V3a3.42 3.42 0 0 0 1.835.697z"/>
+                                        </svg>
+                                        Швидкі фільтри
+                                    </h4>
+                                    <svg class="filter-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M6 9l6 6 6-6"/>
+                                    </svg>
+                                </button>
+                                <div class="filter-group__content">
+                                    <div class="filter-group__content-inner">
+                                        <div class="quick-filters">
+                                            <label class="filter-switch">
+                                                <input type="checkbox" class="filter-switch__input" id="filter-in-stock">
+                                                <span class="filter-switch__slider"></span>
+                                                <span class="filter-switch__label">В наявності</span>
+                                            </label>
+                                            <label class="filter-switch">
+                                                <input type="checkbox" class="filter-switch__input" id="filter-on-sale">
+                                                <span class="filter-switch__slider"></span>
+                                                <span class="filter-switch__label">Зі знижкою</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                    
+                    <!-- Filter Overlay (mobile) -->
+                    <div class="filter-overlay" id="filter-overlay"></div>
+
+                    <!-- Products Grid -->
+                    <div class="catalog-main">
+                        <div class="products-grid" id="catalog-grid">
+                            <!-- Products loaded here -->
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="pagination" id="pagination">
+                            <!-- Pagination loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__inner container">
+            <div class="footer__brand">
+                <a href="/" class="footer__logo">Spongik</a>
+                <p class="footer__tagline">Професійні beauty-товари для салонів краси, перукарень та дому</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/spongik.od/" target="_blank" class="footer__social-link" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="5"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="18" cy="6" r="1"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer__nav">
+                <h4 class="footer__nav-title">Каталог</h4>
+                <ul class="footer__nav-list">
+                    <li><a href="/pages/catalog" class="footer__nav-link">Всі товари</a></li>
+                    <li><a href="/pages/catalog?category=combs" class="footer__nav-link">Гребінці</a></li>
+                    <li><a href="/pages/catalog?category=brushes" class="footer__nav-link">Пензлі</a></li>
+                    <li><a href="/pages/catalog?category=sponges" class="footer__nav-link">Спонжі</a></li>
+                    <li><a href="/pages/catalog?category=nailfiles" class="footer__nav-link">Пилочки</a></li>
+                    <li><a href="/pages/catalog?category=pedicure" class="footer__nav-link">Терки</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer__nav">
+                <h4 class="footer__nav-title">Інформація</h4>
+                <ul class="footer__nav-list">
+                    <li><a href="/pages/about" class="footer__nav-link">Про нас</a></li>
+                    <li><a href="https://ig.me/m/spongik.od" target="_blank" class="footer__nav-link">Написати нам</a></li>
+                    <li><a href="/pages/cart" class="footer__nav-link">Кошик</a></li>
+                    <li><a href="/pages/account" class="footer__nav-link">Особистий кабінет</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer__contacts">
+                <h4 class="footer__nav-title">Контакти</h4>
+                <div class="footer__contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 2 0 0122 16.92z"/>
+                    </svg>
+                    <div>
+                        <a href="tel:+380634242497" class="footer__phone">+380 63 424 24 97</a>
+                        <a href="tel:+380687961552" class="footer__phone">+380 68 796 15 52</a>
+                    </div>
+                </div>
+                <div class="footer__contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <div>
+                        <span>Одеса, Україна</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom container">
+            <p class="footer__copy">© 2025 Spongik. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span class="toast__message"></span>
+    </div>
+
+    <script>
+        // Mobile menu
+        (function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navClose = document.getElementById('nav-close');
+            const nav = document.getElementById('main-nav');
+            const overlay = document.getElementById('nav-overlay');
+            
+            if (!menuToggle || !nav) return;
+            
+            const closeMenu = () => {
+                nav.classList.remove('is-open');
+                if (overlay) {
+                    overlay.classList.remove('is-open');
+                }
+                document.body.style.overflow = '';
+            };
+            
+            const openMenu = () => {
+                nav.classList.add('is-open');
+                if (overlay) {
+                    overlay.classList.add('is-open');
+                }
+                document.body.style.overflow = 'hidden';
+            };
+            
+            menuToggle.addEventListener('click', openMenu);
+            
+            if (navClose) {
+                navClose.addEventListener('click', closeMenu);
+            }
+            
+            if (overlay) {
+                overlay.addEventListener('click', closeMenu);
+            }
+            
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+                    closeMenu();
+                }
+            });
+        })();
+    </script>
+    <script type="module" src="../assets/js/catalog.js"></script>
+</body>
+</html>
+
