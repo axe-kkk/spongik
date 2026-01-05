@@ -44,7 +44,15 @@ async function init() {
 
 function initButtons() {
     var addCatBtn = document.getElementById('add-category-btn');
-    if (addCatBtn) addCatBtn.addEventListener('click', openAddCategoryModal);
+    if (addCatBtn) {
+        addCatBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openAddCategoryModal().catch(function(err) {
+                console.error('Error opening add category modal:', err);
+                showToast('Помилка відкриття форми', 'error');
+            });
+        });
+    }
     
     var addProdBtn = document.getElementById('add-product-btn');
     if (addProdBtn) addProdBtn.addEventListener('click', openAddProductModal);
@@ -1169,70 +1177,97 @@ async function loadCategories() {
 }
 
 async function openAddCategoryModal() {
-    // Загружаем все категории для выбора родителя
-    var categories = await api('/admin/categories');
-    
-    // Строим опции для выбора родительской категории
-    var parentOptions = '<option value="">Без батьківської категорії</option>';
-    var tree = buildCategoryTree(categories);
-    
-    function buildOptions(cats, level) {
-        var options = '';
-        cats.forEach(function(cat) {
-            var indent = '&nbsp;'.repeat(level * 2);
-            options += '<option value="' + cat.id + '">' + indent + (level > 0 ? '└─ ' : '') + cat.name + '</option>';
-            if (cat.children && cat.children.length > 0) {
-                options += buildOptions(cat.children, level + 1);
-            }
-        });
-        return options;
-    }
-    
-    parentOptions += buildOptions(tree, 0);
-    
-    var html = '<form id="add-category-form">' +
-        '<div class="form-group">' +
-            '<label class="form-label">Назва *</label>' +
-            '<input type="text" class="input" name="name" required>' +
-        '</div>' +
-        '<div class="form-group">' +
-            '<label class="form-label">Батьківська категорія</label>' +
-            '<select class="input" name="parent_id">' + parentOptions + '</select>' +
-        '</div>' +
-        '<div class="form-group">' +
-            '<label class="checkbox">' +
-                '<input type="checkbox" name="is_active" checked>' +
-                '<span>Активна</span>' +
-            '</label>' +
-        '</div>' +
-        '<button type="submit" class="btn btn--primary btn--full">Створити</button>' +
-        '</form>';
-    
-    openModal('Нова категорія', html);
-    
-    document.getElementById('add-category-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        var name = e.target.name.value;
-        var parentId = e.target.parent_id.value || null;
-        var isActive = e.target.is_active.checked;
-        
+    try {
+        // Загружаем все категории для выбора родителя
+        var categories = [];
         try {
-            await api('/admin/categories', {
-                method: 'POST',
-                body: JSON.stringify({ 
-                    name: name, 
-                    slug: slugify(name),
-                    parent_id: parentId ? parseInt(parentId) : null,
-                    is_active: isActive
-                })
-            });
-            closeModal();
-            showToast('Категорію створено');
-            loadCategories();
-        } catch (err) {
-            showToast(err.message, 'error');
+            categories = await api('/admin/categories');
+        } catch (e) {
+            console.error('Failed to load categories:', e);
+            categories = [];
         }
-    });
+        
+        // Строим опции для выбора родительской категории
+        var parentOptions = '<option value="">Без батьківської категорії</option>';
+        if (categories && categories.length > 0) {
+            var tree = buildCategoryTree(categories);
+            
+            function buildOptions(cats, level) {
+                var options = '';
+                cats.forEach(function(cat) {
+                    var indent = '&nbsp;'.repeat(level * 2);
+                    options += '<option value="' + cat.id + '">' + indent + (level > 0 ? '└─ ' : '') + cat.name + '</option>';
+                    if (cat.children && cat.children.length > 0) {
+                        options += buildOptions(cat.children, level + 1);
+                    }
+                });
+                return options;
+            }
+            
+            parentOptions += buildOptions(tree, 0);
+        }
+        
+        var html = '<form id="add-category-form">' +
+            '<div class="form-group">' +
+                '<label class="form-label">Назва *</label>' +
+                '<input type="text" class="input" name="name" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+                '<label class="form-label">Батьківська категорія</label>' +
+                '<select class="input" name="parent_id">' + parentOptions + '</select>' +
+            '</div>' +
+            '<div class="form-group">' +
+                '<label class="checkbox">' +
+                    '<input type="checkbox" name="is_active" checked>' +
+                    '<span>Активна</span>' +
+                '</label>' +
+            '</div>' +
+            '<button type="submit" class="btn btn--primary btn--full">Створити</button>' +
+            '</form>';
+        
+        openModal('Нова категорія', html);
+        
+        var form = document.getElementById('add-category-form');
+        if (form) {
+            // Удаляем старый обработчик, если он есть
+            var newForm = form.cloneNode(true);
+            form.parentNode.replaceChild(newForm, form);
+            
+            newForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                var name = e.target.name.value.trim();
+                if (!name) {
+                    showToast('Введіть назву категорії', 'error');
+                    return;
+                }
+                
+                var parentId = e.target.parent_id.value || null;
+                var isActive = e.target.is_active.checked;
+                
+                try {
+                    await api('/admin/categories', {
+                        method: 'POST',
+                        body: JSON.stringify({ 
+                            name: name, 
+                            slug: slugify(name),
+                            parent_id: parentId ? parseInt(parentId) : null,
+                            is_active: isActive
+                        })
+                    });
+                    closeModal();
+                    showToast('Категорію створено');
+                    loadCategories();
+                } catch (err) {
+                    var errorMsg = err.message || 'Помилка створення категорії';
+                    showToast(errorMsg, 'error');
+                    console.error('Error creating category:', err);
+                }
+            });
+        }
+    } catch (err) {
+        console.error('Error opening add category modal:', err);
+        showToast('Помилка відкриття форми', 'error');
+    }
 }
 
 window.editCategory = async function(id) {

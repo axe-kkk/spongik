@@ -1,4 +1,19 @@
 spongik.od.ua, www.spongik.od.ua {
-    reverse_proxy frontend:80
+    # Автоматический HTTPS
+    encode zstd gzip
+    
+    # Принудительный редирект с HTTP на HTTPS
+    @http {
+        protocol http
+    }
+    redir @http https://{host}{uri} permanent
+    
+    # Проксирование на frontend
+    reverse_proxy frontend:80 {
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Port {port}
+    }
 }
 

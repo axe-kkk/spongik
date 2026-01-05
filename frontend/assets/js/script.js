@@ -308,7 +308,12 @@ async function loadBestsellers() {
     `).join('');
     
     try {
-        const res = await fetch('/api/products?page_size=4&sort=newest');
+        // Используем относительный путь для работы с HTTPS
+        const apiUrl = '/api/products?page_size=4&sort=newest';
+        const res = await fetch(apiUrl, {
+            credentials: 'include',
+            mode: 'cors'
+        });
         if (!res.ok) throw new Error('Failed to load');
         const data = await res.json();
         
