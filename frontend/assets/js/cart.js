@@ -70,14 +70,6 @@ async function updateCartItemsData() {
                 }
                 
                 const product = await api.getProduct(productSlug);
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    old_price: product.old_price,
-                    final_price: product.final_price,
-                    discount_percent: product.discount_percent,
-                    is_featured: product.is_featured
-                });
                 
                 if (product) {
                     const basePrice = parseFloat(product.price) || 0;
