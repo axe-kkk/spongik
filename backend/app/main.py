@@ -45,8 +45,9 @@ app.include_router(admin_products.router)
 app.include_router(admin_stats.router)
 
 # Static files for uploads
-if os.path.exists("/data/uploads"):
-    app.mount("/uploads", StaticFiles(directory="/data/uploads"), name="uploads")
+# Create directory if it doesn't exist
+os.makedirs("/data/uploads", exist_ok=True)
+app.mount("/uploads", StaticFiles(directory="/data/uploads"), name="uploads")
 
 
 @app.get("/")

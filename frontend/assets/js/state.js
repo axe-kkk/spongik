@@ -59,17 +59,6 @@ export const cart = {
     },
     
     add(product, qty = 1) {
-        // DEBUG: логируем данные продукта при добавлении
-        console.log('Adding product to cart:', {
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            final_price: product.final_price,
-            old_price: product.old_price,
-            discount_percent: product.discount_percent,
-            is_featured: product.is_featured
-        });
-        
         const existing = this.find(product.id);
         
         if (existing) {
@@ -82,6 +71,10 @@ export const cart = {
             existing.old_price = product.old_price !== undefined ? product.old_price : (existing.old_price || null);
             existing.discount_percent = product.discount_percent !== undefined ? product.discount_percent : (existing.discount_percent || null);
             existing.is_featured = product.is_featured !== undefined ? product.is_featured : (existing.is_featured || false);
+            // Обновляем изображение, если оно отсутствует или изменилось
+            if (product.primary_image && (!existing.image || existing.image !== product.primary_image)) {
+                existing.image = product.primary_image;
+            }
         } else {
             // Сохраняем base price и final price отдельно для правильного определения скидок
             const basePrice = parseFloat(product.price) || 0;
@@ -99,9 +92,6 @@ export const cart = {
                 image: product.primary_image,
                 qty,
             };
-            
-            // DEBUG: логируем сохраненный элемент
-            console.log('Saved cart item:', newItem);
             
             this.items.push(newItem);
         }

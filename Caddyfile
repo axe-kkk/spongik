@@ -1,0 +1,4 @@
+spongik.od.ua, www.spongik.od.ua {
+    reverse_proxy frontend:80
+}
+

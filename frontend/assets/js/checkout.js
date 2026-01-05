@@ -760,7 +760,11 @@ function initNovaPoshtaAutocomplete() {
                 }
                 
                 warehouseDropdown.innerHTML = filtered.map(wh => `
-                    <div class="autocomplete-dropdown__item" data-ref="${wh.ref}" data-name="${wh.name}">
+                    <div class="autocomplete-dropdown__item" 
+                         data-ref="${wh.ref}" 
+                         data-name="${wh.name}"
+                         data-short-address="${wh.shortAddress || ''}"
+                         data-type="${wh.type || ''}">
                         <div class="autocomplete-dropdown__item-name">
                             ${wh.type === 'Postomat' ? '📮 ' : '📦 '}
                             ${wh.name}
@@ -774,8 +778,15 @@ function initNovaPoshtaAutocomplete() {
                     item.addEventListener('click', () => {
                         const warehouseName = item.dataset.name;
                         const warehouseRef = item.dataset.ref;
+                        const warehouseType = item.dataset.type;
+                        const shortAddress = item.dataset.shortAddress;
                         
-                        warehouseInput.value = warehouseName;
+                        // Для поштомата используем адрес, для отделения - название
+                        const displayValue = warehouseType === 'Postomat' && shortAddress 
+                            ? shortAddress 
+                            : warehouseName;
+                        
+                        warehouseInput.value = displayValue;
                         const warehouseRefInput = document.getElementById('delivery-warehouse-ref');
                         if (warehouseRefInput) warehouseRefInput.value = warehouseRef;
                         warehouseDropdown.style.display = 'none';
@@ -807,7 +818,11 @@ async function loadWarehouses(cityRef, cityName = null) {
         }
         
         warehouseDropdown.innerHTML = warehouses.map(wh => `
-            <div class="autocomplete-dropdown__item" data-ref="${wh.ref}" data-name="${wh.name}">
+            <div class="autocomplete-dropdown__item" 
+                 data-ref="${wh.ref}" 
+                 data-name="${wh.name}"
+                 data-short-address="${wh.shortAddress || ''}"
+                 data-type="${wh.type || ''}">
                 <div class="autocomplete-dropdown__item-name">
                     ${wh.type === 'Postomat' ? '📮 ' : '📦 '}
                     ${wh.name}
@@ -821,8 +836,15 @@ async function loadWarehouses(cityRef, cityName = null) {
             item.addEventListener('click', () => {
                 const warehouseName = item.dataset.name;
                 const warehouseRef = item.dataset.ref;
+                const warehouseType = item.dataset.type;
+                const shortAddress = item.dataset.shortAddress;
                 
-                warehouseInput.value = warehouseName;
+                // Для поштомата используем адрес, для отделения - название
+                const displayValue = warehouseType === 'Postomat' && shortAddress 
+                    ? shortAddress 
+                    : warehouseName;
+                
+                warehouseInput.value = displayValue;
                 const warehouseRefInput = document.getElementById('delivery-warehouse-ref');
                 if (warehouseRefInput) warehouseRefInput.value = warehouseRef;
                 warehouseDropdown.style.display = 'none';

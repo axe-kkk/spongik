@@ -55,8 +55,10 @@ async function updateCartItemsData() {
         // 1. Нет base_price или slug
         // 2. old_price и discount_percent равны null (возможно, данные неполные)
         // 3. base_price === price (нет скидки, но возможно должна быть)
+        // 4. Нет изображения
         const shouldUpdate = !item.base_price || 
                             !item.slug ||
+                            !item.image ||
                             (item.old_price === null && item.discount_percent === null);
         
         if (shouldUpdate) {
@@ -94,9 +96,18 @@ async function updateCartItemsData() {
                         item.discount_percent = product.discount_percent || null;
                         item.is_featured = product.is_featured || false;
                         if (!item.slug) item.slug = product.slug;
+                        // Обновляем изображение, если оно отсутствует или изменилось
+                        if (product.primary_image && (!item.image || item.image !== product.primary_image)) {
+                            item.image = product.primary_image;
+                        }
                         
                         needsUpdate = true;
                     } else {
+                        // Даже если данные не изменились, обновляем изображение если оно отсутствует
+                        if (product.primary_image && !item.image) {
+                            item.image = product.primary_image;
+                            needsUpdate = true;
+                        }
                     }
                 }
             } catch (error) {
@@ -201,19 +212,6 @@ function renderItems(items) {
         if (item.is_featured) {
             badges.push(`<span class="badge badge--new">New</span>`);
         }
-        
-        // DEBUG: логируем данные для отладки
-            basePrice,
-            finalPrice,
-            oldPrice,
-            discount_percent: item.discount_percent,
-            calculatedDiscountPercent: discountPercent,
-            hasDirectDiscount,
-            hasPromoDiscount,
-            hasDiscount,
-            badgesCount: badges.length,
-            badgesHTML: badges.join('')
-        });
         
         return `
         <article class="cart-item" 

@@ -55,7 +55,7 @@ nano .env
 ENV=production
 SECRET_KEY=your-super-secret-key-min-32-characters-long-random-string
 DATABASE_URL=sqlite:////data/sqlite.db
-CORS_ORIGINS=https://spongik.od,https://www.spongik.od
+CORS_ORIGINS=https://spongik.od.ua,https://www.spongik.od.ua
 ADMIN_EMAIL=admin@spongik.od
 ADMIN_PHONE=+380631234567
 ADMIN_PASSWORD=secure-password-123
@@ -74,15 +74,11 @@ openssl rand -hex 32
 python3 -c "import secrets; print(secrets.token_urlsafe(32))"
 ```
 
-### 4. Настройка домена (nginx.conf)
+### 4. Настройка домена
 
-Если у вас есть домен, обновите `frontend/nginx.conf`:
+Домен настраивается в файле `Caddyfile` (см. раздел "Настройка HTTPS с Caddy").
 
-```nginx
-server_name yourdomain.com www.yourdomain.com;
-```
-
-Или используйте переменную окружения через envsubst (продвинутый вариант).
+Внутренний nginx использует `server_name _;` для работы с любым доменом через Caddy.
 
 ### 5. Запуск приложения
 
@@ -101,12 +97,77 @@ docker-compose logs -f
 
 После запуска проверьте:
 
-- Frontend: http://your-server-ip или https://yourdomain.com
-- Backend API: http://your-server-ip:8000/api/health
-- API Docs: http://your-server-ip:8000/docs
-- Admin Panel: http://your-server-ip/admin
+- Frontend: https://spongik.od.ua (через Caddy с автоматическим HTTPS)
+- Backend API: https://spongik.od.ua/api/health (через Caddy)
+- API Docs: https://spongik.od.ua/api/docs (через Caddy)
+- Admin Panel: https://spongik.od.ua/admin (через Caddy)
 
-## Настройка HTTPS (рекомендуется)
+## Настройка HTTPS с Caddy (автоматически)
+
+Caddy автоматически получает и обновляет SSL-сертификаты от Let's Encrypt.
+
+### 1. Настройка Caddyfile
+
+В корне проекта уже создан файл `Caddyfile` с настройками для домена `spongik.od.ua`.
+
+Если нужно изменить домен, отредактируйте `Caddyfile`:
+
+```bash
+nano Caddyfile
+```
+
+Пример для другого домена:
+```
+yourdomain.com, www.yourdomain.com {
+    reverse_proxy frontend:80
+}
+```
+
+### 2. Настройка DNS
+
+Убедитесь, что DNS записи для вашего домена указывают на IP сервера:
+
+```
+A     @           -> ваш-ip-сервера
+A     www         -> ваш-ip-сервера
+```
+
+### 3. Обновление CORS_ORIGINS в .env
+
+В файле `.env` укажите HTTPS домены:
+
+```env
+CORS_ORIGINS=https://spongik.od.ua,https://www.spongik.od.ua
+```
+
+### 4. Запуск с Caddy
+
+Caddy уже добавлен в `docker-compose.yml`. Просто запустите:
+
+```bash
+docker-compose up -d --build
+```
+
+Caddy автоматически:
+- Получит SSL-сертификат от Let's Encrypt
+- Настроит автоматический редирект с HTTP на HTTPS
+- Будет обновлять сертификат автоматически
+
+### 5. Проверка HTTPS
+
+После запуска подождите 1-2 минуты, пока Caddy получит сертификат, затем проверьте:
+
+```bash
+# Проверка статуса Caddy
+docker-compose logs caddy
+
+# Откройте в браузере
+https://spongik.od.ua
+```
+
+---
+
+## Настройка HTTPS вручную (альтернатива - не рекомендуется)
 
 ### С использованием Certbot и Let's Encrypt
 

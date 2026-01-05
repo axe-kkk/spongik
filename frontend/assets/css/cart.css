@@ -37,8 +37,8 @@
 
 .cart-item {
     display: flex;
-    gap: 20px;
-    padding: 20px;
+    gap: 12px;
+    padding: 12px;
     background: var(--color-white);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-soft);
@@ -47,6 +47,13 @@
     overflow: hidden;
     animation: slideIn 0.3s ease-out backwards;
     border: 1px solid transparent;
+}
+
+@media (min-width: 375px) {
+    .cart-item {
+        gap: 20px;
+        padding: 20px;
+    }
 }
 
 .cart-item[style*="cursor: pointer"] {
@@ -113,11 +120,19 @@
 }
 
 .cart-item__image {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     flex-shrink: 0;
     border-radius: var(--radius-lg);
     overflow: hidden;
+}
+
+@media (min-width: 375px) {
+    .cart-item__image {
+        width: 120px;
+        height: 120px;
+    }
+}
     background: linear-gradient(135deg, var(--color-pink-soft) 0%, var(--color-cream) 100%);
     position: relative;
 }
@@ -163,12 +178,19 @@
 }
 
 .cart-item__name {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.4;
     color: var(--color-text);
     margin: 0;
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 375px) {
+    .cart-item__name {
+        font-size: 16px;
+        line-height: 1.5;
+    }
 }
 
 .cart-item__name a {
@@ -196,9 +218,15 @@
 }
 
 .cart-item__price {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--color-text);
+}
+
+@media (min-width: 375px) {
+    .cart-item__price {
+        font-size: 18px;
+    }
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -209,9 +237,15 @@
 }
 
 .cart-item__price-old {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: var(--color-text-muted);
+}
+
+@media (min-width: 375px) {
+    .cart-item__price-old {
+        font-size: 14px;
+    }
     text-decoration: line-through;
     transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }

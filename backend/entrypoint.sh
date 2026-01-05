@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Creating uploads directory..."
+mkdir -p /data/uploads
+
 echo "Running database migrations and seed..."
 python -m app.scripts.seed_admin
 
