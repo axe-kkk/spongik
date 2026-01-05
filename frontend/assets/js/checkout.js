@@ -759,19 +759,26 @@ function initNovaPoshtaAutocomplete() {
                     return;
                 }
                 
-                warehouseDropdown.innerHTML = filtered.map(wh => `
+                warehouseDropdown.innerHTML = filtered.map(wh => {
+                    // Для поштоматов используем shortAddress, если он есть
+                    const shortAddr = wh.shortAddress || '';
+                    const displayName = wh.name || '';
+                    const displayDesc = wh.type === 'Postomat' && shortAddr ? shortAddr : (shortAddr || displayName);
+                    
+                    return `
                     <div class="autocomplete-dropdown__item" 
-                         data-ref="${wh.ref}" 
-                         data-name="${wh.name}"
-                         data-short-address="${wh.shortAddress || ''}"
+                         data-ref="${wh.ref || ''}" 
+                         data-name="${displayName}"
+                         data-short-address="${shortAddr}"
                          data-type="${wh.type || ''}">
                         <div class="autocomplete-dropdown__item-name">
                             ${wh.type === 'Postomat' ? '📮 ' : '📦 '}
-                            ${wh.name}
+                            ${displayName}
                         </div>
-                        <div class="autocomplete-dropdown__item-desc">${wh.shortAddress}</div>
+                        <div class="autocomplete-dropdown__item-desc">${displayDesc}</div>
                     </div>
-                `).join('');
+                    `;
+                }).join('');
                 
                 // Add click handlers
                 warehouseDropdown.querySelectorAll('.autocomplete-dropdown__item').forEach(item => {
@@ -779,12 +786,20 @@ function initNovaPoshtaAutocomplete() {
                         const warehouseName = item.dataset.name;
                         const warehouseRef = item.dataset.ref;
                         const warehouseType = item.dataset.type;
-                        const shortAddress = item.dataset.shortAddress;
+                        const shortAddress = item.dataset.shortAddress || '';
                         
-                        // Для поштомата используем адрес, для отделения - название
-                        const displayValue = warehouseType === 'Postomat' && shortAddress 
-                            ? shortAddress 
-                            : warehouseName;
+                        // Для поштомата используем shortAddress (если есть), иначе название
+                        // Для отделения используем название
+                        let displayValue = warehouseName;
+                        if (warehouseType === 'Postomat') {
+                            if (shortAddress && shortAddress.trim()) {
+                                displayValue = shortAddress.trim();
+                            } else if (warehouseName && warehouseName.trim() && warehouseName.trim() !== 'Поштомат') {
+                                displayValue = warehouseName.trim();
+                            } else {
+                                displayValue = warehouseName || 'Поштомат';
+                            }
+                        }
                         
                         warehouseInput.value = displayValue;
                         const warehouseRefInput = document.getElementById('delivery-warehouse-ref');
@@ -817,19 +832,26 @@ async function loadWarehouses(cityRef, cityName = null) {
             return;
         }
         
-        warehouseDropdown.innerHTML = warehouses.map(wh => `
+        warehouseDropdown.innerHTML = warehouses.map(wh => {
+            // Для поштоматов используем shortAddress, если он есть
+            const shortAddr = wh.shortAddress || '';
+            const displayName = wh.name || '';
+            const displayDesc = wh.type === 'Postomat' && shortAddr ? shortAddr : (shortAddr || displayName);
+            
+            return `
             <div class="autocomplete-dropdown__item" 
-                 data-ref="${wh.ref}" 
-                 data-name="${wh.name}"
-                 data-short-address="${wh.shortAddress || ''}"
+                 data-ref="${wh.ref || ''}" 
+                 data-name="${displayName}"
+                 data-short-address="${shortAddr}"
                  data-type="${wh.type || ''}">
                 <div class="autocomplete-dropdown__item-name">
                     ${wh.type === 'Postomat' ? '📮 ' : '📦 '}
-                    ${wh.name}
+                    ${displayName}
                 </div>
-                <div class="autocomplete-dropdown__item-desc">${wh.shortAddress}</div>
+                <div class="autocomplete-dropdown__item-desc">${displayDesc}</div>
             </div>
-        `).join('');
+            `;
+        }).join('');
         
         // Add click handlers
         warehouseDropdown.querySelectorAll('.autocomplete-dropdown__item').forEach(item => {
@@ -837,12 +859,20 @@ async function loadWarehouses(cityRef, cityName = null) {
                 const warehouseName = item.dataset.name;
                 const warehouseRef = item.dataset.ref;
                 const warehouseType = item.dataset.type;
-                const shortAddress = item.dataset.shortAddress;
+                const shortAddress = item.dataset.shortAddress || '';
                 
-                // Для поштомата используем адрес, для отделения - название
-                const displayValue = warehouseType === 'Postomat' && shortAddress 
-                    ? shortAddress 
-                    : warehouseName;
+                // Для поштомата используем shortAddress (если есть), иначе название
+                // Для отделения используем название
+                let displayValue = warehouseName;
+                if (warehouseType === 'Postomat') {
+                    if (shortAddress && shortAddress.trim()) {
+                        displayValue = shortAddress.trim();
+                    } else if (warehouseName && warehouseName.trim() && warehouseName.trim() !== 'Поштомат') {
+                        displayValue = warehouseName.trim();
+                    } else {
+                        displayValue = warehouseName || 'Поштомат';
+                    }
+                }
                 
                 warehouseInput.value = displayValue;
                 const warehouseRefInput = document.getElementById('delivery-warehouse-ref');
