@@ -72,8 +72,14 @@ export const cart = {
             existing.discount_percent = product.discount_percent !== undefined ? product.discount_percent : (existing.discount_percent || null);
             existing.is_featured = product.is_featured !== undefined ? product.is_featured : (existing.is_featured || false);
             // Обновляем изображение, если оно отсутствует или изменилось
-            if (product.primary_image && (!existing.image || existing.image !== product.primary_image)) {
-                existing.image = product.primary_image;
+            // Нормализуем URL изображения
+            if (product.primary_image) {
+                const normalizedImage = product.primary_image.startsWith('/') 
+                    ? product.primary_image 
+                    : '/' + product.primary_image;
+                if (!existing.image || existing.image !== normalizedImage) {
+                    existing.image = normalizedImage;
+                }
             }
         } else {
             // Сохраняем base price и final price отдельно для правильного определения скидок
@@ -89,7 +95,7 @@ export const cart = {
                 old_price: product.old_price !== undefined ? product.old_price : null,
                 discount_percent: product.discount_percent !== undefined ? product.discount_percent : null,
                 is_featured: product.is_featured !== undefined ? product.is_featured : false,
-                image: product.primary_image,
+                image: product.primary_image ? (product.primary_image.startsWith('/') ? product.primary_image : '/' + product.primary_image) : null,
                 qty,
             };
             

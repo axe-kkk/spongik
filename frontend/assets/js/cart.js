@@ -89,15 +89,24 @@ async function updateCartItemsData() {
                         item.is_featured = product.is_featured || false;
                         if (!item.slug) item.slug = product.slug;
                         // Обновляем изображение, если оно отсутствует или изменилось
-                        if (product.primary_image && (!item.image || item.image !== product.primary_image)) {
-                            item.image = product.primary_image;
+                        // Нормализуем URL изображения (убеждаемся, что он начинается с /)
+                        if (product.primary_image) {
+                            const normalizedImage = product.primary_image.startsWith('/') 
+                                ? product.primary_image 
+                                : '/' + product.primary_image;
+                            if (!item.image || item.image !== normalizedImage) {
+                                item.image = normalizedImage;
+                            }
                         }
                         
                         needsUpdate = true;
                     } else {
                         // Даже если данные не изменились, обновляем изображение если оно отсутствует
                         if (product.primary_image && !item.image) {
-                            item.image = product.primary_image;
+                            const normalizedImage = product.primary_image.startsWith('/') 
+                                ? product.primary_image 
+                                : '/' + product.primary_image;
+                            item.image = normalizedImage;
                             needsUpdate = true;
                         }
                     }
@@ -216,7 +225,14 @@ function renderItems(items) {
             <div class="cart-item__image" style="position: relative;">
                 ${badges.length > 0 ? `<div class="product-card__badges" style="position: absolute; top: 8px; left: 8px; z-index: 2; display: flex; flex-direction: column; gap: 4px;">${badges.join('')}</div>` : ''}
                 ${item.image 
-                    ? `<img src="${item.image}" alt="${item.name}" class="cart-item__img">`
+                    ? `<img src="${item.image}" alt="${item.name}" class="cart-item__img" onerror="this.onerror=null; this.src='/assets/images/placeholder.png'; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-pink-soft) 0%, var(--color-cream) 100%); display: none; align-items: center; justify-content: center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width: 48px; height: 48px; opacity: 0.3;">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                        </div>`
                     : `<div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-pink-soft) 0%, var(--color-cream) 100%); display: flex; align-items: center; justify-content: center;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width: 48px; height: 48px; opacity: 0.3;">
                             <rect x="3" y="3" width="18" height="18" rx="2"/>
