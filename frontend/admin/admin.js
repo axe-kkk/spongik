@@ -530,9 +530,15 @@ window.viewOrder = async function(id) {
         
         // Формируем список товаров с деталями
         var itemsHtml = (o.items || []).map(function(item) {
+            var imageUrl = item.product_image || '/assets/images/placeholder.png';
+            var imageHtml = '<div class="order-item__image">' +
+                '<img src="' + imageUrl + '" alt="' + (item.product_name || '') + '" onerror="this.src=\'/assets/images/placeholder.png\'">' +
+                '</div>';
+            
             return '<div class="order-item">' +
+                imageHtml +
                 '<div class="order-item__info">' +
-                    '<div class="order-item__name">' + item.product_name + '</div>' +
+                    '<div class="order-item__name">' + (item.product_name || 'Товар') + '</div>' +
                     (item.product_sku ? '<div class="order-item__sku">Артикул: ' + item.product_sku + '</div>' : '') +
                 '</div>' +
                 '<div class="order-item__qty">' + item.quantity + ' шт</div>' +
@@ -634,6 +640,12 @@ window.viewOrder = async function(id) {
             '</div>';
         
         openModal('Замовлення ' + o.order_number, html);
+        // Добавляем класс для больших окон после открытия
+        var modalOverlay = document.getElementById('modal-overlay');
+        var modal = modalOverlay.querySelector('.modal');
+        if (modal) {
+            modal.classList.add('modal--lg');
+        }
     } catch (e) {
         showToast('Помилка', 'error');
     }
@@ -1601,9 +1613,17 @@ window.toggleUserStatus = async function(id, currentStatus) {
 
 // Modal
 function openModal(title, content) {
+    var modalOverlay = document.getElementById('modal-overlay');
+    var modal = modalOverlay.querySelector('.modal');
+    
+    // Убираем класс modal--lg если он был установлен ранее
+    if (modal) {
+        modal.classList.remove('modal--lg');
+    }
+    
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-body').innerHTML = content;
-    document.getElementById('modal-overlay').classList.add('is-open');
+    modalOverlay.classList.add('is-open');
     document.body.style.overflow = 'hidden';
 }
 

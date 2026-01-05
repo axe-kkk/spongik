@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, model_serializer
 from typing import Optional, List
 from datetime import datetime
 from decimal import Decimal
@@ -32,6 +32,7 @@ class OrderItemResponse(BaseModel):
     product_id: int
     product_name: str
     product_sku: Optional[str] = None
+    product_image: Optional[str] = None
     quantity: int
     price: Decimal
     total: Decimal

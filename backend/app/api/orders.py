@@ -5,8 +5,9 @@ from datetime import datetime, date
 from math import ceil
 from app.api.deps import get_db, get_current_user, get_current_user_optional, admin_required
 from app.models.user import User
-from app.models.order import Order, OrderStatus
-from app.schemas.order import OrderCreate, OrderResponse, OrderListResponse, OrderStatusUpdate
+from app.models.order import Order, OrderStatus, OrderItem
+from app.models.product import Product
+from app.schemas.order import OrderCreate, OrderResponse, OrderListResponse, OrderStatusUpdate, OrderItemResponse
 from app.services.orders import create_order
 
 router = APIRouter(tags=["orders"])
@@ -36,7 +37,7 @@ def get_my_orders(
     """Список моих заказов"""
     stmt = select(Order).where(Order.user_id == current_user.id).order_by(Order.created_at.desc())
     orders = db.exec(stmt).all()
-    return orders
+    return [build_order_response(order, db) for order in orders]
 
 
 @router.get("/api/me/orders/{order_id}", response_model=OrderResponse)
@@ -51,7 +52,7 @@ def get_my_order(
     if not order or order.user_id != current_user.id:
         raise HTTPException(status_code=404, detail="Order not found")
     
-    return order
+    return build_order_response(order, db)
 
 
 # === Admin: управление заказами ===
@@ -96,12 +97,45 @@ def admin_list_orders(
     offset = (page - 1) * page_size
     orders = all_orders[offset:offset + page_size]
     
+    # Строим ответы с изображениями товаров
+    orders_with_images = [build_order_response(order, db) for order in orders]
+    
     return OrderListResponse(
-        items=orders,
+        items=orders_with_images,
         total=total,
         page=page,
         page_size=page_size
     )
+
+
+def build_order_response(order: Order, db: Session) -> dict:
+    """Построить ответ заказа с изображениями товаров"""
+    order_dict = order.model_dump()
+    
+    # Получаем изображения товаров для каждого элемента заказа
+    items_with_images = []
+    for item in order.items:
+        item_dict = item.model_dump()
+        
+        # Получаем изображение товара
+        product = db.get(Product, item.product_id)
+        if product:
+            # Находим primary image или первое изображение
+            primary_image = None
+            for img in product.images:
+                if img.is_primary:
+                    primary_image = img.url
+                    break
+            if not primary_image and product.images:
+                primary_image = product.images[0].url
+            item_dict['product_image'] = primary_image
+        else:
+            item_dict['product_image'] = None
+        
+        items_with_images.append(OrderItemResponse(**item_dict))
+    
+    order_dict['items'] = items_with_images
+    return OrderResponse(**order_dict)
 
 
 @router.get("/api/admin/orders/{order_id}", response_model=OrderResponse)
@@ -114,7 +148,8 @@ def admin_get_order(
     order = db.get(Order, order_id)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
-    return order
+    
+    return build_order_response(order, db)
 
 
 @router.patch("/api/admin/orders/{order_id}", response_model=OrderResponse)

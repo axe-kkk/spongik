@@ -1,12 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Query
 from sqlmodel import Session, select, col
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from decimal import Decimal
 from datetime import datetime
 import os
 import uuid
 import shutil
 from math import ceil
+from io import BytesIO
+from PIL import Image, ExifTags
 from app.api.deps import get_db, admin_required
 from app.models.user import User
 from app.models.product import Product, ProductImage
@@ -21,6 +23,89 @@ from app.services.pricing import build_product_detail_response
 router = APIRouter(prefix="/api/admin/products", tags=["admin-products"])
 
 UPLOAD_DIR = "/data/uploads"
+
+
+def fix_image_orientation(image: Image.Image) -> Image.Image:
+    """Исправляет ориентацию изображения по EXIF данным"""
+    try:
+        # Получаем EXIF данные
+        exif = image.getexif()
+        if exif is None:
+            return image
+        
+        # Ищем тег ориентации
+        orientation = None
+        for tag, value in exif.items():
+            if tag in ExifTags.TAGS and ExifTags.TAGS[tag] == 'Orientation':
+                orientation = value
+                break
+        
+        if orientation is None:
+            return image
+        
+        # Поворачиваем изображение в зависимости от ориентации
+        if orientation == 3:
+            image = image.rotate(180, expand=True)
+        elif orientation == 6:
+            image = image.rotate(270, expand=True)
+        elif orientation == 8:
+            image = image.rotate(90, expand=True)
+        
+        return image
+    except Exception:
+        # Если не удалось обработать EXIF, возвращаем оригинал
+        return image
+
+
+def process_uploaded_image(file: UploadFile, max_size: int = 2000, quality: int = 85) -> Tuple[bytes, str]:
+    """
+    Обрабатывает загруженное изображение:
+    - Исправляет ориентацию по EXIF
+    - Конвертирует в JPEG
+    - Оптимизирует размер
+    """
+    # Читаем файл в память
+    file_content = file.file.read()
+    file.file.seek(0)  # Возвращаем указатель в начало
+    
+    try:
+        # Открываем изображение
+        image = Image.open(BytesIO(file_content))
+        
+        # Конвертируем в RGB если нужно (для PNG с прозрачностью)
+        if image.mode in ('RGBA', 'LA', 'P'):
+            # Создаем белый фон
+            rgb_image = Image.new('RGB', image.size, (255, 255, 255))
+            if image.mode == 'P':
+                image = image.convert('RGBA')
+            rgb_image.paste(image, mask=image.split()[-1] if image.mode in ('RGBA', 'LA') else None)
+            image = rgb_image
+        elif image.mode != 'RGB':
+            image = image.convert('RGB')
+        
+        # Исправляем ориентацию
+        image = fix_image_orientation(image)
+        
+        # Изменяем размер если нужно
+        width, height = image.size
+        if width > max_size or height > max_size:
+            if width > height:
+                new_width = max_size
+                new_height = int(height * (max_size / width))
+            else:
+                new_height = max_size
+                new_width = int(width * (max_size / height))
+            image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+        
+        # Сохраняем в JPEG
+        output = BytesIO()
+        image.save(output, format='JPEG', quality=quality, optimize=True)
+        output.seek(0)
+        
+        return output.read(), '.jpg'
+    except Exception as e:
+        # Если не удалось обработать, возвращаем оригинал
+        return file_content, os.path.splitext(file.filename)[1] if file.filename else '.jpg'
 
 
 # === CRUD Products ===
@@ -197,14 +282,16 @@ async def upload_image(
     # Создаём директорию
     os.makedirs(UPLOAD_DIR, exist_ok=True)
     
+    # Обрабатываем изображение (исправляем ориентацию, конвертируем в JPEG)
+    processed_image, ext = process_uploaded_image(file)
+    
     # Генерируем имя файла
-    ext = os.path.splitext(file.filename)[1] if file.filename else ".jpg"
     filename = f"{uuid.uuid4().hex}{ext}"
     filepath = os.path.join(UPLOAD_DIR, filename)
     
-    # Сохраняем файл
+    # Сохраняем обработанный файл
     with open(filepath, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        buffer.write(processed_image)
     
     # Если is_primary — снимаем флаг с других
     if is_primary:
