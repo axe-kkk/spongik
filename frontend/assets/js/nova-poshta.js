@@ -124,14 +124,24 @@ export async function getWarehouses(cityRef = null, cityName = null, warehouseTy
     const warehouses = await novaPoshtaRequest('getWarehouses', methodProperties);
     
     if (warehouses && warehouses.length > 0) {
-        return warehouses.map(wh => ({
-            ref: wh.Ref,
-            number: wh.Number,
-            name: wh.Description,
-            shortAddress: wh.ShortAddress,
-            city: wh.CityDescription,
-            type: wh.TypeOfWarehouse,
-        }));
+        return warehouses.map(wh => {
+            // Нормализуем тип: определяем поштомат по TypeOfWarehouse или Description
+            const desc = (wh.Description || '').toLowerCase();
+            const typeRaw = String(wh.TypeOfWarehouse || '');
+            
+            const isPostomat =
+                typeRaw.toLowerCase().includes('postomat') ||
+                desc.includes('поштомат');
+            
+            return {
+                ref: wh.Ref,
+                number: wh.Number,
+                name: wh.Description,
+                shortAddress: wh.ShortAddress,
+                city: wh.CityDescription,
+                type: isPostomat ? 'Postomat' : 'Branch',
+            };
+        });
     }
     
     return [];
