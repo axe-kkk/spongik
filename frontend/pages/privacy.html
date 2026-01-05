@@ -17,108 +17,218 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <style>
         .privacy-page {
-            padding: var(--space-10) 0 var(--space-12);
+            padding: calc(var(--header-height) + 40px) 0 80px;
+            min-height: calc(100vh - var(--header-height));
         }
         
         .privacy-header {
             text-align: center;
-            margin-bottom: var(--space-10);
-            padding-bottom: var(--space-6);
+            margin-bottom: 60px;
+            padding-bottom: 32px;
             border-bottom: 2px solid rgba(242, 151, 160, 0.2);
         }
         
         .privacy-header__title {
             font-family: var(--font-display);
-            font-size: clamp(28px, 5vw, 36px);
+            font-size: clamp(32px, 5vw, 42px);
             font-weight: 600;
             color: var(--color-text);
-            margin-bottom: var(--space-3);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
         }
         
         .privacy-header__date {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--color-text-muted);
+            font-weight: 500;
         }
         
         .privacy-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            padding: 0 20px;
         }
         
         .privacy-section {
-            margin-bottom: var(--space-8);
+            margin-bottom: 48px;
+        }
+        
+        .privacy-section:last-of-type {
+            margin-bottom: 0;
         }
         
         .privacy-section__title {
             font-family: var(--font-display);
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 600;
             color: var(--color-text);
-            margin-bottom: var(--space-4);
-            padding-bottom: var(--space-2);
-            border-bottom: 1px solid rgba(242, 151, 160, 0.1);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(242, 151, 160, 0.15);
+            letter-spacing: -0.01em;
         }
         
         .privacy-section__text {
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 16px;
+            line-height: 1.8;
             color: var(--color-text);
-            margin-bottom: var(--space-4);
+            margin-bottom: 16px;
+        }
+        
+        .privacy-section__text:last-child {
+            margin-bottom: 0;
         }
         
         .privacy-section__list {
-            margin: var(--space-4) 0;
-            padding-left: var(--space-6);
+            margin: 20px 0;
+            padding-left: 24px;
+            list-style: none;
         }
         
         .privacy-section__list li {
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 16px;
+            line-height: 1.8;
             color: var(--color-text);
-            margin-bottom: var(--space-2);
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 8px;
+        }
+        
+        .privacy-section__list li::before {
+            content: '•';
+            position: absolute;
+            left: -20px;
+            color: var(--color-pink);
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .privacy-section__list li strong {
+            color: var(--color-text);
+            font-weight: 600;
         }
         
         .privacy-contact {
-            background: rgba(242, 151, 160, 0.05);
+            background: linear-gradient(135deg, rgba(242, 151, 160, 0.08) 0%, rgba(232, 134, 143, 0.08) 100%);
             border: 1px solid rgba(242, 151, 160, 0.2);
-            border-radius: var(--radius-lg);
-            padding: var(--space-6);
-            margin-top: var(--space-8);
+            border-radius: 20px;
+            padding: 32px;
+            margin-top: 60px;
+            box-shadow: 0 4px 20px rgba(242, 151, 160, 0.1);
         }
         
         .privacy-contact__title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             color: var(--color-text);
-            margin-bottom: var(--space-3);
+            margin-bottom: 16px;
+            font-family: var(--font-display);
         }
         
         .privacy-contact__info {
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 16px;
+            line-height: 1.8;
             color: var(--color-text);
+        }
+        
+        .privacy-contact__info p {
+            margin-bottom: 12px;
+        }
+        
+        .privacy-contact__info p:last-child {
+            margin-bottom: 0;
         }
         
         .privacy-contact__info a {
             color: var(--color-pink);
-            text-decoration: underline;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
         
         .privacy-contact__info a:hover {
             color: var(--color-pink-hover);
+            text-decoration: underline;
+        }
+        
+        @media (min-width: 768px) {
+            .privacy-page {
+                padding: calc(var(--header-height) + 60px) 0 100px;
+            }
+            
+            .privacy-content {
+                padding: 0 40px;
+            }
+            
+            .privacy-header {
+                margin-bottom: 80px;
+                padding-bottom: 40px;
+            }
+            
+            .privacy-section {
+                margin-bottom: 56px;
+            }
+            
+            .privacy-contact {
+                padding: 40px;
+            }
         }
         
         @media (max-width: 375px) {
             .privacy-page {
-                padding: var(--space-8) 0 var(--space-10);
+                padding: calc(var(--header-height) + 32px) 0 60px;
+            }
+            
+            .privacy-header {
+                margin-bottom: 40px;
+                padding-bottom: 24px;
+            }
+            
+            .privacy-header__title {
+                font-size: 28px;
+            }
+            
+            .privacy-content {
+                padding: 0 16px;
+            }
+            
+            .privacy-section {
+                margin-bottom: 36px;
             }
             
             .privacy-section__title {
                 font-size: 20px;
+                margin-bottom: 16px;
+                padding-bottom: 10px;
             }
             
             .privacy-section__text {
-                font-size: 14px;
+                font-size: 15px;
+                line-height: 1.7;
+            }
+            
+            .privacy-section__list {
+                margin: 16px 0;
+                padding-left: 20px;
+            }
+            
+            .privacy-section__list li {
+                font-size: 15px;
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            
+            .privacy-contact {
+                padding: 24px;
+                margin-top: 40px;
+            }
+            
+            .privacy-contact__title {
+                font-size: 18px;
+            }
+            
+            .privacy-contact__info {
+                font-size: 15px;
             }
         }
     </style>
@@ -275,40 +385,72 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__section">
-                    <h3 class="footer__title">Spongik</h3>
-                    <p class="footer__text">Якісні гребінці та щітки для волосся з доставкою по Україні.</p>
-                </div>
-                <div class="footer__section">
-                    <h4 class="footer__subtitle">Навігація</h4>
-                    <nav class="footer__nav">
-                        <a href="/pages/catalog" class="footer__link">Каталог</a>
-                        <a href="/pages/about" class="footer__link">Про нас</a>
-                        <a href="/pages/privacy" class="footer__link">Політика конфіденційності</a>
-                    </nav>
-                </div>
-                <div class="footer__section">
-                    <h4 class="footer__subtitle">Контакти</h4>
-                    <div class="footer__contact-item">
+        <div class="footer__inner container">
+            <div class="footer__brand">
+                <a href="/" class="footer__logo">Spongik</a>
+                <p class="footer__tagline">Професійні beauty-товари для салонів краси, перукарень та дому</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/spongik.od/" target="_blank" class="footer__social-link" aria-label="Instagram">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            <rect x="2" y="2" width="20" height="20" rx="5"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="18" cy="6" r="1"/>
                         </svg>
-                        <div>
-                            <a href="tel:+380634242497" class="footer__phone">+380 63 424 24 97</a>
-                            <a href="tel:+380687961552" class="footer__phone">+380 68 796 15 52</a>
-                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer__nav">
+                <h4 class="footer__nav-title">Каталог</h4>
+                <ul class="footer__nav-list">
+                    <li><a href="/pages/catalog" class="footer__nav-link">Всі товари</a></li>
+                    <li><a href="/pages/catalog?category=combs" class="footer__nav-link">Гребінці</a></li>
+                    <li><a href="/pages/catalog?category=brushes" class="footer__nav-link">Пензлі</a></li>
+                    <li><a href="/pages/catalog?category=sponges" class="footer__nav-link">Спонжі</a></li>
+                    <li><a href="/pages/catalog?category=nailfiles" class="footer__nav-link">Пилочки</a></li>
+                    <li><a href="/pages/catalog?category=pedicure" class="footer__nav-link">Терки</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer__nav">
+                <h4 class="footer__nav-title">Інформація</h4>
+                <ul class="footer__nav-list">
+                    <li><a href="/pages/about" class="footer__nav-link">Про нас</a></li>
+                    <li><a href="https://ig.me/m/spongik.od" target="_blank" class="footer__nav-link">Написати нам</a></li>
+                    <li><a href="/pages/cart" class="footer__nav-link">Кошик</a></li>
+                    <li><a href="/pages/account" class="footer__nav-link">Особистий кабінет</a></li>
+                    <li><a href="/pages/privacy" class="footer__nav-link">Політика конфіденційності</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer__contacts">
+                <h4 class="footer__nav-title">Контакти</h4>
+                <div class="footer__contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 2 0 0122 16.92z"/>
+                    </svg>
+                    <div>
+                        <a href="tel:+380634242497" class="footer__phone">+380 63 424 24 97</a>
+                        <a href="tel:+380687961552" class="footer__phone">+380 68 796 15 52</a>
+                    </div>
+                </div>
+                <div class="footer__contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <div>
+                        <span>Одеса, Україна</span>
                     </div>
                 </div>
             </div>
-            <div class="footer__bottom container">
-                <p class="footer__copy">© 2025 Spongik. Всі права захищені.</p>
-            </div>
+        </div>
+        <div class="footer__bottom container">
+            <p class="footer__copy">© 2025 Spongik. Всі права захищені.</p>
         </div>
     </footer>
 
-    <script src="../assets/js/app.js" type="module"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 </html>
 
