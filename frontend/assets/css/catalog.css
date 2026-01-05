@@ -52,10 +52,6 @@
         flex-wrap: nowrap;
         justify-content: flex-start;
     }
-    
-    .filter-toggle {
-        display: none; /* Скрываем на десктопе */
-    }
 }
 
 /* Catalog Search */
@@ -207,9 +203,11 @@
     .sort-wrapper {
         margin-left: auto;
     }
-    
+}
+
+@media (min-width: 1024px) {
     .filter-toggle {
-        display: none; /* Скрываем кнопку фильтра на десктопе */
+        display: none; /* Скрываем кнопку фильтра только на больших экранах */
     }
 }
 
@@ -1783,6 +1781,8 @@
     text-transform: uppercase;
     border-radius: 12px;
     margin-bottom: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .product-stock--in {
@@ -1793,6 +1793,15 @@
 .product-stock--out {
     background: rgba(158, 158, 158, 0.15);
     color: #757575;
+}
+
+/* Адаптив для маленьких экранов */
+@media (max-width: 375px) {
+    .product-stock {
+        font-size: 11px;
+        padding: 4px 10px;
+        letter-spacing: 0.03em;
+    }
 }
 
 /* Image Link */

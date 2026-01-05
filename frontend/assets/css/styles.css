@@ -909,6 +909,15 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     background: rgba(155, 155, 155, 0.1);
 }
 
+/* Адаптив для маленьких экранов */
+@media (max-width: 375px) {
+    .product-stock {
+        font-size: 11px;
+        padding: 3px 8px;
+        white-space: nowrap;
+    }
+}
+
 .product-price {
     display: flex;
     align-items: baseline;
@@ -1153,6 +1162,8 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     text-transform: uppercase;
     border-radius: 12px;
     margin-bottom: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .product-stock--in {
@@ -1163,6 +1174,15 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 .product-stock--out {
     background: rgba(158, 158, 158, 0.15);
     color: #757575;
+}
+
+/* Адаптив для маленьких экранов - второй блок product-stock */
+@media (max-width: 375px) {
+    .product-stock {
+        font-size: 11px;
+        padding: 4px 10px;
+        letter-spacing: 0.03em;
+    }
 }
 
 .btn-add:disabled {

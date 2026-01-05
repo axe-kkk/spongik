@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>Політика конфіденційності — Spongik</title>
+    <meta name="description" content="Політика конфіденційності Spongik. Як ми збираємо, використовуємо та захищаємо вашу персональну інформацію.">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .privacy-page {
+            padding: var(--space-10) 0 var(--space-12);
+        }
+        
+        .privacy-header {
+            text-align: center;
+            margin-bottom: var(--space-10);
+            padding-bottom: var(--space-6);
+            border-bottom: 2px solid rgba(242, 151, 160, 0.2);
+        }
+        
+        .privacy-header__title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 5vw, 36px);
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--space-3);
+        }
+        
+        .privacy-header__date {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+        
+        .privacy-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .privacy-section {
+            margin-bottom: var(--space-8);
+        }
+        
+        .privacy-section__title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-2);
+            border-bottom: 1px solid rgba(242, 151, 160, 0.1);
+        }
+        
+        .privacy-section__text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--color-text);
+            margin-bottom: var(--space-4);
+        }
+        
+        .privacy-section__list {
+            margin: var(--space-4) 0;
+            padding-left: var(--space-6);
+        }
+        
+        .privacy-section__list li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--color-text);
+            margin-bottom: var(--space-2);
+        }
+        
+        .privacy-contact {
+            background: rgba(242, 151, 160, 0.05);
+            border: 1px solid rgba(242, 151, 160, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin-top: var(--space-8);
+        }
+        
+        .privacy-contact__title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--space-3);
+        }
+        
+        .privacy-contact__info {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--color-text);
+        }
+        
+        .privacy-contact__info a {
+            color: var(--color-pink);
+            text-decoration: underline;
+        }
+        
+        .privacy-contact__info a:hover {
+            color: var(--color-pink-hover);
+        }
+        
+        @media (max-width: 375px) {
+            .privacy-page {
+                padding: var(--space-8) 0 var(--space-10);
+            }
+            
+            .privacy-section__title {
+                font-size: 20px;
+            }
+            
+            .privacy-section__text {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header__inner container">
+            <button class="menu-btn" id="menu-toggle" aria-label="Меню">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <a href="/" class="logo">Spongik</a>
+            <nav class="nav" id="main-nav">
+                <button class="nav__close" id="nav-close" aria-label="Закрити меню">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                <a href="/pages/catalog" class="nav__link">Каталог</a>
+                <a href="/pages/about" class="nav__link">Про нас</a>
+                <a href="https://www.instagram.com/spongik.od/" target="_blank" class="nav__link">Instagram</a>
+            </nav>
+            <div class="header__actions">
+                <a href="/pages/login" class="header__btn" aria-label="Вхід">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
+                <a href="/pages/favorites" class="header__btn" aria-label="Обране">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </a>
+                <a href="/pages/cart" class="header__btn cart-btn" aria-label="Кошик">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2"/>
+                        <circle cx="9" cy="20" r="1.5"/>
+                        <circle cx="18" cy="20" r="1.5"/>
+                    </svg>
+                    <span class="cart-btn__count" id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+        <div class="nav-overlay" id="nav-overlay"></div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="privacy-page">
+                <div class="privacy-header">
+                    <h1 class="privacy-header__title">Політика конфіденційності</h1>
+                    <p class="privacy-header__date">Останнє оновлення: 5 січня 2025 року</p>
+                </div>
+
+                <div class="privacy-content">
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">1. Загальні положення</h2>
+                        <p class="privacy-section__text">
+                            Ця Політика конфіденційності описує, як Spongik ("ми", "наш", "нас") збирає, використовує та захищає персональну інформацію користувачів нашого веб-сайту spongik.od.ua ("Сайт").
+                        </p>
+                        <p class="privacy-section__text">
+                            Використовуючи наш Сайт, ви погоджуєтеся зі збиранням та використанням інформації відповідно до цієї Політики конфіденційності.
+                        </p>
+                    </section>
+
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">2. Яку інформацію ми збираємо</h2>
+                        <p class="privacy-section__text">Ми можемо збирати наступну інформацію:</p>
+                        <ul class="privacy-section__list">
+                            <li><strong>Персональні дані:</strong> ім'я, прізвище, електронна пошта, номер телефону, адреса доставки</li>
+                            <li><strong>Дані про замовлення:</strong> інформація про товари, які ви замовляєте, спосіб оплати та доставки</li>
+                            <li><strong>Технічні дані:</strong> IP-адреса, тип браузера, операційна система, дані про відвідування Сайту</li>
+                            <li><strong>Cookies:</strong> файли cookie для покращення роботи Сайту та персоналізації досвіду</li>
+                        </ul>
+                    </section>
+
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">3. Як ми використовуємо інформацію</h2>
+                        <p class="privacy-section__text">Ми використовуємо зібрану інформацію для:</p>
+                        <ul class="privacy-section__list">
+                            <li>Обробки та виконання ваших замовлень</li>
+                            <li>Зв'язку з вами щодо замовлень та надання підтримки</li>
+                            <li>Покращення роботи Сайту та розробки нових послуг</li>
+                            <li>Надсилання інформації про нові товари та акції (за вашою згодою)</li>
+                            <li>Забезпечення безпеки та запобігання шахрайству</li>
+                        </ul>
+                    </section>
+
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">4. Захист інформації</h2>
+                        <p class="privacy-section__text">
+                            Ми вживаємо необхідних технічних та організаційних заходів для захисту вашої персональної інформації від несанкціонованого доступу, зміни, розкриття або знищення.
+                        </p>
+                        <p class="privacy-section__text">
+                            Всі дані передаються через зашифроване з'єднання (HTTPS), а конфіденційна інформація зберігається на захищених серверах.
+                        </p>
+                    </section>
+
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">5. Передача даних третім особам</h2>
+                        <p class="privacy-section__text">
+                            Ми не продаємо, не обмінюємо та не передаємо вашу персональну інформацію третім особам, за винятком випадків:
+                        </p>
+                        <ul class="privacy-section__list">
+                            <li>Коли це необхідно для виконання замовлення (наприклад, служби доставки)</li>
+                            <li>Коли це вимагається законом або для захисту наших прав</li>
+                            <li>З вашої явної згоди</li>
+                        </ul>
+                    </section>
+
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">6. Cookies</h2>
+                        <p class="privacy-section__text">
+                            Наш Сайт використовує файли cookie для покращення роботи та персоналізації досвіду. Ви можете налаштувати свій браузер для відмови від cookies, але це може вплинути на функціональність Сайту.
+                        </p>
+                    </section>
+
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">7. Ваші права</h2>
+                        <p class="privacy-section__text">Ви маєте право:</p>
+                        <ul class="privacy-section__list">
+                            <li>Отримати доступ до своїх персональних даних</li>
+                            <li>Вимагати виправлення неточних даних</li>
+                            <li>Вимагати видалення ваших персональних даних</li>
+                            <li>Відкликати згоду на обробку даних</li>
+                            <li>Обмежити обробку ваших персональних даних</li>
+                        </ul>
+                    </section>
+
+                    <section class="privacy-section">
+                        <h2 class="privacy-section__title">8. Зміни в Політиці конфіденційності</h2>
+                        <p class="privacy-section__text">
+                            Ми залишаємо за собою право оновлювати цю Політику конфіденційності. Всі зміни будуть опубліковані на цій сторінці з оновленням дати "Останнє оновлення".
+                        </p>
+                    </section>
+
+                    <div class="privacy-contact">
+                        <h3 class="privacy-contact__title">Контактна інформація</h3>
+                        <div class="privacy-contact__info">
+                            <p>Якщо у вас є питання щодо цієї Політики конфіденційності або ви хочете реалізувати свої права, будь ласка, зв'яжіться з нами:</p>
+                            <p style="margin-top: 12px;">
+                                <strong>Email:</strong> <a href="mailto:info@spongik.od.ua">info@spongik.od.ua</a><br>
+                                <strong>Телефон:</strong> <a href="tel:+380634242497">+380 63 424 24 97</a>, <a href="tel:+380687961552">+380 68 796 15 52</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">Spongik</h3>
+                    <p class="footer__text">Якісні гребінці та щітки для волосся з доставкою по Україні.</p>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__subtitle">Навігація</h4>
+                    <nav class="footer__nav">
+                        <a href="/pages/catalog" class="footer__link">Каталог</a>
+                        <a href="/pages/about" class="footer__link">Про нас</a>
+                        <a href="/pages/privacy" class="footer__link">Політика конфіденційності</a>
+                    </nav>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__subtitle">Контакти</h4>
+                    <div class="footer__contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        <div>
+                            <a href="tel:+380634242497" class="footer__phone">+380 63 424 24 97</a>
+                            <a href="tel:+380687961552" class="footer__phone">+380 68 796 15 52</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom container">
+                <p class="footer__copy">© 2025 Spongik. Всі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/app.js" type="module"></script>
+</body>
+</html>
+
