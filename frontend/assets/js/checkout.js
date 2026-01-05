@@ -786,39 +786,9 @@ function initNovaPoshtaAutocomplete() {
                     item.addEventListener('click', () => {
                         const warehouseName = item.dataset.name || '';
                         const warehouseRef = item.dataset.ref;
-                        const warehouseType = item.dataset.type;
-                        const shortAddress = item.dataset.shortAddress || '';
-                        const warehouseNumber = item.dataset.number || '';
                         
-                        // Для всех (отделения и поштоматы) используем полное описание
-                        // Если name содержит полную информацию - используем его
-                        // Если name короткий (только "Поштомат"), формируем из number + shortAddress
-                        let displayValue = warehouseName.trim();
-                        
-                        if (warehouseType === 'Postomat') {
-                            // Если name содержит только "Поштомат" или очень короткий
-                            if (warehouseName.trim() === 'Поштомат' || warehouseName.trim().length < 10) {
-                                // Формируем полное описание: "Поштомат №XXX: адрес"
-                                const parts = [];
-                                if (warehouseNumber) {
-                                    parts.push(`Поштомат №${warehouseNumber}`);
-                                } else {
-                                    parts.push('Поштомат');
-                                }
-                                if (shortAddress && shortAddress.trim()) {
-                                    parts.push(`: ${shortAddress.trim()}`);
-                                }
-                                displayValue = parts.join('');
-                            } else {
-                                // name уже содержит полную информацию, используем его
-                                displayValue = warehouseName.trim();
-                            }
-                        } else {
-                            // Для отделений используем полное название
-                            displayValue = warehouseName.trim();
-                        }
-                        
-                        warehouseInput.value = displayValue;
+                        // Одинаковая логика для всех - просто используем название
+                        warehouseInput.value = warehouseName.trim();
                         const warehouseRefInput = document.getElementById('delivery-warehouse-ref');
                         if (warehouseRefInput) warehouseRefInput.value = warehouseRef;
                         warehouseDropdown.style.display = 'none';
@@ -876,39 +846,9 @@ async function loadWarehouses(cityRef, cityName = null) {
             item.addEventListener('click', () => {
                 const warehouseName = item.dataset.name || '';
                 const warehouseRef = item.dataset.ref;
-                const warehouseType = item.dataset.type;
-                const shortAddress = item.dataset.shortAddress || '';
-                const warehouseNumber = item.dataset.number || '';
                 
-                // Для всех (отделения и поштоматы) используем полное описание
-                // Если name содержит полную информацию - используем его
-                // Если name короткий (только "Поштомат"), формируем из number + shortAddress
-                let displayValue = warehouseName.trim();
-                
-                if (warehouseType === 'Postomat') {
-                    // Если name содержит только "Поштомат" или очень короткий
-                    if (warehouseName.trim() === 'Поштомат' || warehouseName.trim().length < 10) {
-                        // Формируем полное описание: "Поштомат №XXX: адрес"
-                        const parts = [];
-                        if (warehouseNumber) {
-                            parts.push(`Поштомат №${warehouseNumber}`);
-                        } else {
-                            parts.push('Поштомат');
-                        }
-                        if (shortAddress && shortAddress.trim()) {
-                            parts.push(`: ${shortAddress.trim()}`);
-                        }
-                        displayValue = parts.join('');
-                    } else {
-                        // name уже содержит полную информацию, используем его
-                        displayValue = warehouseName.trim();
-                    }
-                } else {
-                    // Для отделений используем полное название
-                    displayValue = warehouseName.trim();
-                }
-                
-                warehouseInput.value = displayValue;
+                // Одинаковая логика для всех - просто используем название
+                warehouseInput.value = warehouseName.trim();
                 const warehouseRefInput = document.getElementById('delivery-warehouse-ref');
                 if (warehouseRefInput) warehouseRefInput.value = warehouseRef;
                 warehouseDropdown.style.display = 'none';
