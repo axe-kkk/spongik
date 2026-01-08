@@ -598,12 +598,16 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     letter-spacing: 0.12em;
     line-height: 1.1;
     margin-bottom: 20px;
+    color: var(--color-text);
+    text-shadow: 0 2px 8px rgba(243, 235, 216, 0.8), 0 1px 3px rgba(43, 43, 43, 0.3);
 }
 
 .hero p {
     font-size: 17px;
-    color: var(--color-text-secondary);
+    color: var(--color-text);
     margin-bottom: 36px;
+    font-weight: 500;
+    text-shadow: 0 2px 8px rgba(243, 235, 216, 0.8), 0 1px 3px rgba(43, 43, 43, 0.3);
 }
 
 .hero .btn {
