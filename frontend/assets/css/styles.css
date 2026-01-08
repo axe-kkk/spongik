@@ -1512,6 +1512,58 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     height: 22px;
 }
 
+.cta-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.cta-buttons__small {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.cta-btn--small {
+    padding: 12px 16px;
+    font-size: 14px;
+    min-width: 48px;
+    justify-content: center;
+}
+
+.cta-btn--small svg {
+    width: 20px;
+    height: 20px;
+}
+
+.cta-btn--small:first-of-type {
+    background: linear-gradient(135deg, #0088cc, #00a8e8);
+}
+
+.cta-btn--small:first-of-type:hover {
+    box-shadow: 0 8px 24px rgba(0, 136, 204, 0.4);
+}
+
+.cta-btn--small:last-of-type {
+    background: linear-gradient(135deg, #665cac, #7b6fb8);
+}
+
+.cta-btn--small:last-of-type:hover {
+    box-shadow: 0 8px 24px rgba(102, 92, 172, 0.4);
+}
+
+@media (min-width: 768px) {
+    .cta-buttons {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    
+    .cta-buttons__small {
+        justify-content: flex-end;
+    }
+}
+
 /* === ABOUT SECTION === */
 .about {
     background: var(--color-pink-soft);
