@@ -290,8 +290,14 @@ async def upload_image(
     filepath = os.path.join(UPLOAD_DIR, filename)
     
     # Сохраняем обработанный файл
-    with open(filepath, "wb") as buffer:
-        buffer.write(processed_image)
+    try:
+        with open(filepath, "wb") as buffer:
+            buffer.write(processed_image)
+        # Проверяем, что файл действительно создан
+        if not os.path.exists(filepath):
+            raise HTTPException(status_code=500, detail="Failed to save image file")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error saving image: {str(e)}")
     
     # Если is_primary — снимаем флаг с других
     if is_primary:

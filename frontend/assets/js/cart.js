@@ -225,7 +225,7 @@ function renderItems(items) {
             <div class="cart-item__image" style="position: relative;">
                 ${badges.length > 0 ? `<div class="product-card__badges" style="position: absolute; top: 8px; left: 8px; z-index: 2; display: flex; flex-direction: column; gap: 4px;">${badges.join('')}</div>` : ''}
                 ${item.image 
-                    ? `<img src="${item.image}" alt="${item.name}" class="cart-item__img" onerror="this.onerror=null; this.src='/assets/images/placeholder.png'; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    ? `<img src="${item.image}" alt="${item.name}" class="cart-item__img" onerror="this.style.display='none'; const placeholder = this.nextElementSibling; if (placeholder) placeholder.style.display='flex';">
                         <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-pink-soft) 0%, var(--color-cream) 100%); display: none; align-items: center; justify-content: center;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width: 48px; height: 48px; opacity: 0.3;">
                                 <rect x="3" y="3" width="18" height="18" rx="2"/>

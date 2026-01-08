@@ -25,3 +25,4 @@ class Favorite(SQLModel, table=True):
 
 
 
+
