@@ -88,38 +88,24 @@ function initMobileMenu() {
 
 // === Favorites ===
 function initFavorites() {
-    // Load from localStorage for guests
+    // This function is called on page load for static elements
+    // Dynamic cards are handled by initProductCardClicks
+    updateFavoriteStates();
+}
+
+function updateFavoriteStates() {
+    // Load from localStorage
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     
+    // Update all favorite buttons on the page
     document.querySelectorAll('.product-card__favorite').forEach(btn => {
         const card = btn.closest('.product-card');
         const productId = card?.dataset.productId;
         
-        // Set initial state
-        if (productId && favorites.includes(productId)) {
-            btn.classList.add('is-active');
+        if (productId) {
+            const isFavorite = favorites.includes(parseInt(productId));
+            btn.classList.toggle('is-active', isFavorite);
         }
-        
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            btn.classList.toggle('is-active');
-            
-            if (productId) {
-                const idx = favorites.indexOf(productId);
-                if (idx > -1) {
-                    favorites.splice(idx, 1);
-                } else {
-                    favorites.push(productId);
-                }
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-            }
-            
-            // Micro animation
-            btn.style.transform = 'scale(1.2)';
-            setTimeout(() => {
-                btn.style.transform = '';
-            }, 150);
-        });
     });
 }
 
@@ -319,11 +305,11 @@ async function loadBestsellers() {
         
         if (data.items && data.items.length > 0) {
             grid.innerHTML = data.items.map(p => renderProductCard(p)).join('');
-            // initProductCardHandlers is called by renderProductsGrid in ui.js
-            // But if we're using script.js directly, we need to handle it
-            // For now, just use the old initAddToCart for compatibility
+            // Initialize handlers for dynamically created cards
             initAddToCart();
             initProductCardClicks();
+            // Update favorite button states
+            updateFavoriteStates();
         } else {
             // Empty placeholders
             grid.innerHTML = Array(4).fill(0).map(() => `
@@ -490,9 +476,49 @@ function initProductCardClicks() {
     const grid = document.querySelector('.products-grid');
     if (!grid) return;
     
-    // Remove existing listener if any (by using a flag or removing and re-adding)
-    // For simplicity, just add the listener - it will work with event delegation
+    // Favorite toggle handler
     grid.addEventListener('click', (e) => {
+        const favoriteBtn = e.target.closest('[data-action="toggle-favorite"]');
+        if (favoriteBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const card = favoriteBtn.closest('.product-card');
+            if (!card) return;
+            
+            const productId = parseInt(card.dataset.productId);
+            if (!productId) return;
+            
+            // Load favorites from localStorage
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const isFavorite = favorites.includes(productId);
+            
+            // Toggle favorite
+            let newFavorites;
+            if (isFavorite) {
+                newFavorites = favorites.filter(id => id !== productId);
+                favoriteBtn.classList.remove('is-active');
+            } else {
+                newFavorites = [...favorites, productId];
+                favoriteBtn.classList.add('is-active');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('favorites', JSON.stringify(newFavorites));
+            
+            // Show toast
+            if (window.showToast) {
+                window.showToast(
+                    isFavorite ? 'Видалено з обраного' : 'Додано в обране',
+                    'default',
+                    2000
+                );
+            }
+            
+            return;
+        }
+        
+        // Card navigation handler
         const card = e.target.closest('.product-card');
         if (!card) return;
         
