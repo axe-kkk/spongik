@@ -109,6 +109,59 @@ function updateFavoriteStates() {
     });
 }
 
+function initFavoriteButtons() {
+    // Add direct event listeners to all favorite buttons
+    document.querySelectorAll('.product-card__favorite').forEach(btn => {
+        // Remove existing listeners by cloning
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            const card = newBtn.closest('.product-card');
+            if (!card) return;
+            
+            const productId = parseInt(card.dataset.productId);
+            if (!productId) return;
+            
+            // Load favorites from localStorage
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const isFavorite = favorites.includes(productId);
+            
+            // Toggle favorite
+            let newFavorites;
+            if (isFavorite) {
+                newFavorites = favorites.filter(id => id !== productId);
+                newBtn.classList.remove('is-active');
+            } else {
+                newFavorites = [...favorites, productId];
+                newBtn.classList.add('is-active');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('favorites', JSON.stringify(newFavorites));
+            
+            // Show toast
+            if (window.showToast) {
+                window.showToast(
+                    isFavorite ? 'Видалено з обраного' : 'Додано в обране',
+                    'default',
+                    2000
+                );
+            }
+            
+            // Микроанимация
+            newBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                newBtn.style.transform = '';
+            }, 150);
+        }, true); // Use capture phase
+    });
+}
+
 // === Add to Cart ===
 const CART_KEY = 'spongik_cart';
 
@@ -307,9 +360,12 @@ async function loadBestsellers() {
             grid.innerHTML = data.items.map(p => renderProductCard(p)).join('');
             // Initialize handlers for dynamically created cards
             initAddToCart();
-            initProductCardClicks();
-            // Update favorite button states
+            // Update favorite button states first
             updateFavoriteStates();
+            // Then initialize click handlers
+            initProductCardClicks();
+            // Also add direct handlers to favorite buttons
+            initFavoriteButtons();
         } else {
             // Empty placeholders
             grid.innerHTML = Array(4).fill(0).map(() => `
@@ -411,7 +467,8 @@ function renderProductCard(p) {
                 <button class="product-card__favorite ${isFavorite ? 'is-active' : ''}" 
                         aria-label="В обране" 
                         data-action="toggle-favorite"
-                        onclick="event.preventDefault(); event.stopPropagation();">
+                        type="button"
+                        onclick="event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation(); return false;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
@@ -476,18 +533,26 @@ function initProductCardClicks() {
     const grid = document.querySelector('.products-grid');
     if (!grid) return;
     
-    // Favorite toggle handler
+    // Favorite toggle handler - используем capture phase для приоритета
     grid.addEventListener('click', (e) => {
+        // Проверяем, кликнули ли по кнопке избранного или её дочерним элементам
         const favoriteBtn = e.target.closest('[data-action="toggle-favorite"]');
-        if (favoriteBtn) {
+        const isFavoriteClick = e.target.closest('.product-card__favorite') || favoriteBtn;
+        
+        if (isFavoriteClick || favoriteBtn) {
             e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             
-            const card = favoriteBtn.closest('.product-card');
+            const btn = favoriteBtn || isFavoriteClick;
+            const card = btn.closest('.product-card');
             if (!card) return;
             
             const productId = parseInt(card.dataset.productId);
-            if (!productId) return;
+            if (!productId) {
+                console.warn('Product ID not found in card:', card);
+                return;
+            }
             
             // Load favorites from localStorage
             const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
@@ -497,10 +562,10 @@ function initProductCardClicks() {
             let newFavorites;
             if (isFavorite) {
                 newFavorites = favorites.filter(id => id !== productId);
-                favoriteBtn.classList.remove('is-active');
+                btn.classList.remove('is-active');
             } else {
                 newFavorites = [...favorites, productId];
-                favoriteBtn.classList.add('is-active');
+                btn.classList.add('is-active');
             }
             
             // Save to localStorage
@@ -515,7 +580,13 @@ function initProductCardClicks() {
                 );
             }
             
-            return;
+            // Микроанимация
+            btn.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 150);
+            
+            return false;
         }
         
         // Card navigation handler
