@@ -31,66 +31,6 @@
             margin-bottom: 20px;
         }
         
-        .about-hero__tagline {
-            font-size: 20px;
-            color: var(--color-pink);
-            font-weight: 600;
-            margin-bottom: 40px;
-            display: block;
-        }
-        
-        .about-hero__stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .about-stat {
-            text-align: center;
-            padding: 24px;
-            background: var(--color-white);
-            border-radius: 16px;
-            box-shadow: 0 2px 16px rgba(43, 43, 43, 0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .about-stat:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(43, 43, 43, 0.12);
-        }
-        
-        .about-stat__number {
-            display: block;
-            font-family: var(--font-display);
-            font-size: 36px;
-            font-weight: 600;
-            color: var(--color-pink);
-            margin-bottom: 8px;
-        }
-        
-        .about-stat__label {
-            display: block;
-            font-size: 14px;
-            color: var(--color-text-secondary);
-            line-height: 1.4;
-        }
-        
-        @media (max-width: 768px) {
-            .about-hero__stats {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            
-            .about-stat {
-                padding: 20px;
-            }
-            
-            .about-stat__number {
-                font-size: 28px;
-            }
-        }
         
         .about-content {
             max-width: 900px;
@@ -98,64 +38,14 @@
         }
         
         .about-section {
-            margin-bottom: 80px;
-        }
-        
-        .about-section--intro {
-            background: linear-gradient(135deg, rgba(242, 151, 160, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
-            border-radius: 24px;
-            padding: 48px 32px;
-        }
-        
-        .about-section__header {
-            text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
         
         .about-section h2 {
             font-family: var(--font-display);
             font-size: clamp(24px, 4vw, 32px);
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             color: var(--color-text);
-        }
-        
-        .about-section__subtitle {
-            font-size: 18px;
-            color: var(--color-text-secondary);
-            font-weight: 500;
-        }
-        
-        .about-section__content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 32px;
-        }
-        
-        @media (min-width: 768px) {
-            .about-section__content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        .about-text-block {
-            background: var(--color-white);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 2px 16px rgba(43, 43, 43, 0.06);
-        }
-        
-        .about-text-block h3 {
-            font-family: var(--font-display);
-            font-size: 22px;
-            margin-bottom: 16px;
-            color: var(--color-pink);
-        }
-        
-        .about-text-block p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--color-text);
-            margin: 0;
         }
         
         .about-section p {
@@ -163,44 +53,6 @@
             line-height: 1.8;
             color: var(--color-text);
             margin-bottom: 16px;
-        }
-        
-        .about-section--philosophy {
-            text-align: center;
-        }
-        
-        .about-philosophy {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 48px 32px;
-            background: linear-gradient(135deg, var(--color-matcha-soft) 0%, var(--color-cream) 100%);
-            border-radius: 24px;
-        }
-        
-        .about-philosophy__icon {
-            font-size: 48px;
-            margin-bottom: 24px;
-        }
-        
-        .about-philosophy h2 {
-            margin-bottom: 24px;
-        }
-        
-        .about-philosophy__text {
-            font-size: 17px;
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-        
-        .about-philosophy__thanks {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--color-text);
-        }
-        
-        .about-philosophy__thanks .heart {
-            color: var(--color-pink);
-            font-size: 24px;
         }
         
         .about-features {
@@ -392,41 +244,15 @@
             <div class="container">
                 <div class="about-hero">
                     <h1>Про Spongik</h1>
-                    <p class="about-hero__tagline">Ми про красу, якій довіряють</p>
-                    <div class="about-hero__stats">
-                        <div class="about-stat">
-                            <span class="about-stat__number">9</span>
-                            <span class="about-stat__label">років на ринку</span>
-                        </div>
-                        <div class="about-stat">
-                            <span class="about-stat__number">1000+</span>
-                            <span class="about-stat__label">задоволених клієнтів</span>
-                        </div>
-                        <div class="about-stat">
-                            <span class="about-stat__number">500+</span>
-                            <span class="about-stat__label">товарів в асортименті</span>
-                        </div>
-                    </div>
+                    <p>Spongik — ми про красу, якій довіряють. 9 років на ринку, ретельний відбір і любов до кожної деталі.</p>
                 </div>
 
                 <div class="about-content">
-                    <section class="about-section about-section--intro">
-                        <div class="about-section__header">
-                            <h2>Spongik — це більше, ніж просто магазин</h2>
-                            <p class="about-section__subtitle">Це простір, де турбота про себе стає щоденним задоволенням</p>
-                        </div>
-                        
-                        <div class="about-section__content">
-                            <div class="about-text-block">
-                                <h3>Наша місія</h3>
-                                <p>Ми працюємо вже 9 років на ринку та добре знаємо, що якісні б'юті-аксесуари мають бути не лише красивими, а й зручними, надійними та безпечними. Саме тому ми ретельно відбираємо кожен товар — від спонжів і пензлів до гребінців, аксесуарів та інструментів для догляду.</p>
-                            </div>
-                            
-                            <div class="about-text-block">
-                                <h3>Наш підхід</h3>
-                                <p>Нам важливо, щоб кожна покупка у Spongik дарувала радість і впевненість у результаті. Ми стежимо за трендами, співпрацюємо з перевіреними виробниками та пропонуємо продукцію, якою користуємося самі.</p>
-                            </div>
-                        </div>
+                    <section class="about-section">
+                        <h2>Spongik — це більше, ніж просто магазин товарів для краси</h2>
+                        <p>Це простір, де турбота про себе стає щоденним задоволенням.</p>
+                        <p>Ми працюємо вже 9 років на ринку та добре знаємо, що якісні б'юті-аксесуари мають бути не лише красивими, а й зручними, надійними та безпечними. Саме тому ми ретельно відбираємо кожен товар — від спонжів і пензлів до гребінців, аксесуарів та інструментів для догляду.</p>
+                        <p>Нам важливо, щоб кожна покупка у Spongik дарувала радість і впевненість у результаті. Ми стежимо за трендами, співпрацюємо з перевіреними виробниками та пропонуємо продукцію, якою користуємося самі.</p>
                     </section>
 
                     <section class="about-section">
@@ -515,13 +341,10 @@
                         </div>
                     </section>
 
-                    <section class="about-section about-section--philosophy">
-                        <div class="about-philosophy">
-                            <div class="about-philosophy__icon">✨</div>
-                            <h2>Наша філософія</h2>
-                            <p class="about-philosophy__text">Spongik — це про красу без зайвого, про комфорт, стиль і турботу. Ми віримо, що якісні б'юті-аксесуари повинні бути доступними та приносити радість кожного дня.</p>
-                            <p class="about-philosophy__thanks">Дякуємо, що обираєте нас і довіряєте свою красу <span class="heart">❤️</span></p>
-                        </div>
+                    <section class="about-section">
+                        <h2>Наша філософія</h2>
+                        <p>Spongik — це про красу без зайвого, про комфорт, стиль і турботу. Ми віримо, що якісні б'юті-аксесуари повинні бути доступними та приносити радість кожного дня.</p>
+                        <p>Дякуємо, що обираєте нас і довіряєте свою красу ❤️</p>
                     </section>
                 </div>
             </div>
