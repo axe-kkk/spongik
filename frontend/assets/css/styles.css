@@ -581,7 +581,12 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, rgba(243, 235, 216, 0.5) 0%, rgba(243, 235, 216, 0.3) 50%, rgba(243, 235, 216, 0.4) 100%);
+    background: linear-gradient(
+        180deg, 
+        rgba(243, 235, 216, 0.75) 0%, 
+        rgba(243, 235, 216, 0.65) 50%, 
+        rgba(243, 235, 216, 0.7) 100%
+    );
     z-index: 1;
 }
 
@@ -589,6 +594,11 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     position: relative;
     z-index: 2;
     max-width: 600px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    padding: 48px 40px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
 }
 
 .hero h1 {
@@ -598,16 +608,15 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     letter-spacing: 0.12em;
     line-height: 1.1;
     margin-bottom: 20px;
-    color: var(--color-cream);
-    text-shadow: 0 2px 12px rgba(43, 43, 43, 0.8), 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: var(--color-text);
 }
 
 .hero p {
     font-size: 17px;
-    color: var(--color-cream);
+    color: var(--color-text-secondary);
     margin-bottom: 36px;
-    font-weight: 500;
-    text-shadow: 0 2px 12px rgba(43, 43, 43, 0.8), 0 4px 8px rgba(0, 0, 0, 0.5);
+    font-weight: 400;
+    line-height: 1.6;
 }
 
 .hero .btn {
@@ -625,27 +634,9 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 
 /* === TRUST BAR === */
 .trust-bar {
-    background: linear-gradient(135deg, var(--color-pink-soft) 0%, var(--color-cream) 100%);
-    padding: 60px 20px;
-    position: relative;
-    overflow: hidden;
-}
-
-.trust-bar::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 10px,
-        rgba(242, 151, 160, 0.03) 10px,
-        rgba(242, 151, 160, 0.03) 20px
-    );
-    pointer-events: none;
+    background: var(--color-white);
+    padding: 80px 20px;
+    border-top: 1px solid var(--color-border);
 }
 
 .trust-items {
@@ -653,9 +644,7 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    position: relative;
-    z-index: 1;
+    gap: 16px;
 }
 
 @media (min-width: 768px) {
@@ -670,42 +659,50 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 12px;
-    padding: 28px 20px;
-    background: var(--color-white);
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(43, 43, 43, 0.1), 0 2px 8px rgba(242, 151, 160, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(242, 151, 160, 0.2);
+    gap: 16px;
+    padding: 32px 24px;
+    background: var(--color-cream);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
 }
 
 .trust-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 30px rgba(43, 43, 43, 0.15), 0 4px 12px rgba(242, 151, 160, 0.25);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(242, 151, 160, 0.2);
 }
 
 .trust-item__icon {
-    font-size: 36px;
+    font-size: 40px;
     line-height: 1;
     flex-shrink: 0;
+    filter: grayscale(0.2);
+    transition: transform 0.3s ease;
+}
+
+.trust-item:hover .trust-item__icon {
+    transform: scale(1.1);
 }
 
 .trust-item__content {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .trust-item__title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--color-text);
+    font-family: var(--font-body);
 }
 
 .trust-item__desc {
-    font-size: 13px;
-    color: rgba(43, 43, 43, 0.7);
-    line-height: 1.4;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
 }
 
 /* === CATALOG SECTION === */
