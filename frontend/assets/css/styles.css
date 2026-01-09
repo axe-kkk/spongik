@@ -581,7 +581,7 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, rgba(43, 43, 43, 0.5) 0%, rgba(43, 43, 43, 0.3) 50%, rgba(43, 43, 43, 0.4) 100%);
+    background: linear-gradient(180deg, rgba(243, 235, 216, 0.5) 0%, rgba(243, 235, 216, 0.3) 50%, rgba(243, 235, 216, 0.4) 100%);
     z-index: 1;
 }
 
@@ -625,9 +625,27 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 
 /* === TRUST BAR === */
 .trust-bar {
-    background: var(--color-cream);
+    background: linear-gradient(135deg, var(--color-pink-soft) 0%, var(--color-cream) 100%);
     padding: 60px 20px;
-    border-top: 1px solid rgba(43, 43, 43, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.trust-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(242, 151, 160, 0.03) 10px,
+        rgba(242, 151, 160, 0.03) 20px
+    );
+    pointer-events: none;
 }
 
 .trust-items {
@@ -636,6 +654,8 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -651,16 +671,17 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     align-items: center;
     text-align: center;
     gap: 12px;
-    padding: 24px 16px;
+    padding: 28px 20px;
     background: var(--color-white);
-    border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(43, 43, 43, 0.06);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(43, 43, 43, 0.1), 0 2px 8px rgba(242, 151, 160, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(242, 151, 160, 0.2);
 }
 
 .trust-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 20px rgba(43, 43, 43, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(43, 43, 43, 0.15), 0 4px 12px rgba(242, 151, 160, 0.25);
 }
 
 .trust-item__icon {
