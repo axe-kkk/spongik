@@ -27,7 +27,33 @@ const elements = {
 // === Init ===
 let isUpdatingQty = false;
 
+// Функция для нормализации URL изображения
+function normalizeImageUrl(url) {
+    if (!url) return null;
+    try {
+        // Если это полный URL, извлекаем только путь
+        const urlObj = new URL(url, window.location.origin);
+        return urlObj.pathname;
+    } catch {
+        // Если не валидный URL, проверяем, начинается ли с /
+        if (url.startsWith('/')) {
+            return url;
+        }
+        // Если начинается с http:// или https://, но не удалось распарсить, пробуем извлечь путь вручную
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            const match = url.match(/https?:\/\/[^\/]+(\/.*)/);
+            if (match && match[1]) {
+                return match[1];
+            }
+        }
+        return '/' + url;
+    }
+}
+
 async function init() {
+    // Исправляем URL изображений в существующих товарах
+    fixImageUrls();
+    
     // Обновляем данные для существующих товаров в корзине (если они были добавлены до обновления логики)
     await updateCartItemsData();
     
@@ -40,6 +66,26 @@ async function init() {
             renderCart();
         }
     });
+}
+
+// Исправление URL изображений в существующих товарах корзины
+function fixImageUrls() {
+    const items = cart.getAll();
+    let needsSave = false;
+    
+    items.forEach(item => {
+        if (item.image) {
+            const normalized = normalizeImageUrl(item.image);
+            if (normalized !== item.image) {
+                item.image = normalized;
+                needsSave = true;
+            }
+        }
+    });
+    
+    if (needsSave) {
+        cart.save();
+    }
 }
 
 // Обновление данных для товаров в корзине (если они были добавлены до обновления логики)
@@ -89,11 +135,9 @@ async function updateCartItemsData() {
                         item.is_featured = product.is_featured || false;
                         if (!item.slug) item.slug = product.slug;
                         // Обновляем изображение, если оно отсутствует или изменилось
-                        // Нормализуем URL изображения (убеждаемся, что он начинается с /)
+                        // Нормализуем URL изображения (убеждаемся, что он относительный, начинается с /)
                         if (product.primary_image) {
-                            const normalizedImage = product.primary_image.startsWith('/') 
-                                ? product.primary_image 
-                                : '/' + product.primary_image;
+                            const normalizedImage = normalizeImageUrl(product.primary_image);
                             if (!item.image || item.image !== normalizedImage) {
                                 item.image = normalizedImage;
                             }
@@ -103,10 +147,7 @@ async function updateCartItemsData() {
                     } else {
                         // Даже если данные не изменились, обновляем изображение если оно отсутствует
                         if (product.primary_image && !item.image) {
-                            const normalizedImage = product.primary_image.startsWith('/') 
-                                ? product.primary_image 
-                                : '/' + product.primary_image;
-                            item.image = normalizedImage;
+                            item.image = normalizeImageUrl(product.primary_image);
                             needsUpdate = true;
                         }
                     }

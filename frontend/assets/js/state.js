@@ -72,11 +72,19 @@ export const cart = {
             existing.discount_percent = product.discount_percent !== undefined ? product.discount_percent : (existing.discount_percent || null);
             existing.is_featured = product.is_featured !== undefined ? product.is_featured : (existing.is_featured || false);
             // Обновляем изображение, если оно отсутствует или изменилось
-            // Нормализуем URL изображения
+            // Нормализуем URL изображения (убеждаемся, что он относительный, начинается с /)
             if (product.primary_image) {
-                const normalizedImage = product.primary_image.startsWith('/') 
-                    ? product.primary_image 
-                    : '/' + product.primary_image;
+                let normalizedImage = product.primary_image;
+                // Если это полный URL, извлекаем только путь
+                try {
+                    const url = new URL(normalizedImage, window.location.origin);
+                    normalizedImage = url.pathname;
+                } catch {
+                    // Если не валидный URL, проверяем, начинается ли с /
+                    if (!normalizedImage.startsWith('/')) {
+                        normalizedImage = '/' + normalizedImage;
+                    }
+                }
                 if (!existing.image || existing.image !== normalizedImage) {
                     existing.image = normalizedImage;
                 }
@@ -95,7 +103,21 @@ export const cart = {
                 old_price: product.old_price !== undefined ? product.old_price : null,
                 discount_percent: product.discount_percent !== undefined ? product.discount_percent : null,
                 is_featured: product.is_featured !== undefined ? product.is_featured : false,
-                image: product.primary_image ? (product.primary_image.startsWith('/') ? product.primary_image : '/' + product.primary_image) : null,
+                image: (() => {
+                    if (!product.primary_image) return null;
+                    let normalizedImage = product.primary_image;
+                    // Если это полный URL, извлекаем только путь
+                    try {
+                        const url = new URL(normalizedImage, window.location.origin);
+                        normalizedImage = url.pathname;
+                    } catch {
+                        // Если не валидный URL, проверяем, начинается ли с /
+                        if (!normalizedImage.startsWith('/')) {
+                            normalizedImage = '/' + normalizedImage;
+                        }
+                    }
+                    return normalizedImage;
+                })(),
                 qty,
             };
             
