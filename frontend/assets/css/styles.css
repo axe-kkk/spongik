@@ -634,9 +634,8 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 
 /* === TRUST BAR === */
 .trust-bar {
-    background: var(--color-white);
+    background: linear-gradient(135deg, var(--color-matcha) 0%, var(--color-matcha-soft) 100%);
     padding: 80px 20px;
-    border-top: 1px solid var(--color-border);
 }
 
 .trust-items {
