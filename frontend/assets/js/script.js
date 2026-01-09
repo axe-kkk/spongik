@@ -94,8 +94,14 @@ function initFavorites() {
 }
 
 function updateFavoriteStates() {
-    // Load from localStorage
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    // Check if state.js is available
+    const favoritesModule = window.Spongik?.favorites || null;
+    const FAVORITES_KEY = 'spongik_favorites';
+    
+    // Load from localStorage with correct key
+    const favorites = favoritesModule 
+        ? favoritesModule.getAll()
+        : JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
     
     // Update all favorite buttons on the page
     document.querySelectorAll('.product-card__favorite').forEach(btn => {
@@ -103,13 +109,18 @@ function updateFavoriteStates() {
         const productId = card?.dataset.productId;
         
         if (productId) {
-            const isFavorite = favorites.includes(parseInt(productId));
+            const isFavorite = favoritesModule
+                ? favoritesModule.has(parseInt(productId))
+                : favorites.some(item => item.id === parseInt(productId));
             btn.classList.toggle('is-active', isFavorite);
         }
     });
 }
 
 function initFavoriteButtons() {
+    // Check if state.js is available
+    const favoritesModule = window.Spongik?.favorites || null;
+    
     // Add direct event listeners to all favorite buttons
     document.querySelectorAll('.product-card__favorite').forEach(btn => {
         // Remove existing listeners by cloning
@@ -127,27 +138,45 @@ function initFavoriteButtons() {
             const productId = parseInt(card.dataset.productId);
             if (!productId) return;
             
-            // Load favorites from localStorage
-            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-            const isFavorite = favorites.includes(productId);
+            // Get product data from card
+            const product = {
+                id: productId,
+                slug: card.dataset.productSlug || '',
+                name: card.querySelector('.product-card__name')?.textContent?.trim() || '',
+                price: parseFloat(card.dataset.productPrice || 0),
+                final_price: parseFloat(card.dataset.productFinalPrice || card.dataset.productPrice || 0),
+                primary_image: card.querySelector('.product-card__img')?.src || null,
+            };
             
-            // Toggle favorite
-            let newFavorites;
-            if (isFavorite) {
-                newFavorites = favorites.filter(id => id !== productId);
-                newBtn.classList.remove('is-active');
+            // Use state.js if available, otherwise use simple localStorage
+            if (favoritesModule) {
+                const isNowFavorite = favoritesModule.toggle(product);
+                newBtn.classList.toggle('is-active', isNowFavorite);
             } else {
-                newFavorites = [...favorites, productId];
-                newBtn.classList.add('is-active');
+                // Fallback to simple localStorage with correct key
+                const FAVORITES_KEY = 'spongik_favorites';
+                const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+                const isFavorite = favorites.some(item => item.id === productId);
+                
+                let newFavorites;
+                if (isFavorite) {
+                    newFavorites = favorites.filter(item => item.id !== productId);
+                    newBtn.classList.remove('is-active');
+                } else {
+                    newFavorites = [...favorites, product];
+                    newBtn.classList.add('is-active');
+                }
+                
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
             }
-            
-            // Save to localStorage
-            localStorage.setItem('favorites', JSON.stringify(newFavorites));
             
             // Show toast
             if (window.showToast) {
+                const isNowFavorite = favoritesModule 
+                    ? favoritesModule.has(productId)
+                    : JSON.parse(localStorage.getItem('spongik_favorites') || '[]').some(item => item.id === productId);
                 window.showToast(
-                    isFavorite ? 'Видалено з обраного' : 'Додано в обране',
+                    isNowFavorite ? 'Додано в обране' : 'Видалено з обраного',
                     'default',
                     2000
                 );
@@ -460,7 +489,12 @@ function renderProductCard(p) {
         : '<span class="product-stock product-stock--out">Немає в наявності</span>';
     
     return `
-        <article class="product-card" data-product-id="${p.id}" data-product-slug="${p.slug || ''}">
+        <article class="product-card" 
+                 data-product-id="${p.id}" 
+                 data-product-slug="${p.slug || ''}"
+                 data-product-price="${basePrice}"
+                 data-product-final-price="${finalPrice}"
+                 data-product-old-price="${oldPrice || ''}">
             <a href="/pages/product?slug=${p.slug || p.id}" class="product-card__image">
                 ${badges.length ? `<div class="product-card__badges">${badges.join('')}</div>` : ''}
                 
@@ -554,27 +588,43 @@ function initProductCardClicks() {
                 return;
             }
             
-            // Load favorites from localStorage
-            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-            const isFavorite = favorites.includes(productId);
+            // Get product data from card
+            const nameElement = card.querySelector('.product-card__name');
+            const nameLink = nameElement?.querySelector('a');
+            const product = {
+                id: productId,
+                slug: card.dataset.productSlug || '',
+                name: (nameLink?.textContent || nameElement?.textContent || '').trim(),
+                price: parseFloat(card.dataset.productPrice || 0),
+                final_price: parseFloat(card.dataset.productFinalPrice || card.dataset.productPrice || 0),
+                primary_image: card.querySelector('.product-card__img')?.src || null,
+            };
+            
+            // Use localStorage with correct key and format (same as state.js)
+            const FAVORITES_KEY = 'spongik_favorites';
+            const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+            const isFavorite = favorites.some(item => item.id === productId);
             
             // Toggle favorite
             let newFavorites;
+            let isNowFavorite;
             if (isFavorite) {
-                newFavorites = favorites.filter(id => id !== productId);
+                newFavorites = favorites.filter(item => item.id !== productId);
+                isNowFavorite = false;
                 btn.classList.remove('is-active');
             } else {
-                newFavorites = [...favorites, productId];
+                newFavorites = [...favorites, product];
+                isNowFavorite = true;
                 btn.classList.add('is-active');
             }
             
             // Save to localStorage
-            localStorage.setItem('favorites', JSON.stringify(newFavorites));
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
             
             // Show toast
             if (window.showToast) {
                 window.showToast(
-                    isFavorite ? 'Видалено з обраного' : 'Додано в обране',
+                    isNowFavorite ? 'Додано в обране' : 'Видалено з обраного',
                     'default',
                     2000
                 );
